@@ -23,8 +23,8 @@ export function Scoreboard() {
             How we compare methods
           </h2>
           <p className="rail-sub">
-            Every method runs on the same model, with the same evaluation, on the same hardware. We
-            have no results yet, so nothing here is filled in.
+            We’ll run every method on the same model and the same hardware, and judge them all the
+            same way. We have no results yet, so nothing here is filled in.
           </p>
         </div>
 
@@ -75,8 +75,8 @@ export function Scoreboard() {
             </tbody>
           </table>
           <p className="compare-note">
-            The empty bars are placeholders, not data. A row is filled in only after we have
-            measured it.
+            Nothing is measured yet, so the bars are empty. We’ll fill in each row once we have real
+            numbers.
           </p>
         </div>
       </div>

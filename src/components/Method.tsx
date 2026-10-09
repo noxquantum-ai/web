@@ -39,8 +39,9 @@ export function Method() {
               quantization and distillation.
             </p>
             <p className="method-caveat">
-              The numbers on the right only count what has to be stored. Whether a trained model’s
-              weights survive that squeeze without losing what matters is the part we’re testing.
+              These numbers only count what has to be stored. We don’t yet know whether a trained
+              model’s weights can be squeezed that far without losing what matters. That’s what
+              we’re testing.
             </p>
             <a className="text-link" href="#approach">
               How we work <span aria-hidden="true">→</span>
