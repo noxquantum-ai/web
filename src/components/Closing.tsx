@@ -17,15 +17,15 @@ export function Footer() {
         </div>
         <nav aria-label="Research">
           <p>Research</p>
-          <a href="#compression">Compression</a>
-          <a href="#evaluation">Evaluation</a>
-          <a href="#inference">Inference</a>
+          <a href="/research#compression">Compression</a>
+          <a href="/research#evaluation">Evaluation</a>
+          <a href="/research#inference">Inference</a>
         </nav>
         <nav aria-label="Company">
           <p>Company</p>
-          <a href="#company">Why Africa</a>
-          <a href="#approach">Approach</a>
-          <a href="#scoreboard">How we compare</a>
+          <a href="/#company">Why Africa</a>
+          <a href="/research#approach">Approach</a>
+          <a href="/research#compare">How we compare</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>

@@ -19,7 +19,7 @@ export default function Hero() {
           quantum-inspired algorithms for hard computational problems, starting with compact AI
           models.
         </p>
-        <a className="btn btn-light" href="#approach">
+        <a className="btn btn-light" href="/research#approach">
           Our approach <span aria-hidden="true">→</span>
         </a>
       </div>

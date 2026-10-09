@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react'
 import Logomark from './Logomark'
 
-const links = [
-  { href: '#research', label: 'Research' },
-  { href: '#company', label: 'Why Africa' },
-  { href: '#approach', label: 'Approach' },
-]
+const links = {
+  home: [
+    { href: '/research', label: 'Research' },
+    { href: '#company', label: 'Why Africa' },
+  ],
+  research: [
+    { href: '/research', label: 'Research', current: true },
+    { href: '/#company', label: 'Why Africa' },
+  ],
+}
 
-export default function Header() {
+export default function Header({ page }: { page: 'home' | 'research' }) {
+  const items: { href: string; label: string; current?: boolean }[] = links[page]
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -20,13 +26,13 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="wrap header-inner">
-        <a className="wordmark" href="#main" aria-label="NoxQuantum home">
+        <a className="wordmark" href="/" aria-label="NoxQuantum home">
           <Logomark />
           NoxQuantum
         </a>
         <nav className="site-nav" aria-label="Primary">
-          {links.map((l) => (
-            <a key={l.href} href={l.href}>
+          {items.map((l) => (
+            <a key={l.href} href={l.href} aria-current={l.current ? 'page' : undefined}>
               {l.label}
             </a>
           ))}
@@ -46,8 +52,13 @@ export default function Header() {
       </div>
       <nav id="mobile-menu" className="mobile-menu" aria-label="Mobile" hidden={!open}>
         <div className="wrap">
-          {[...links, { href: '#contact', label: 'Contact' }].map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+          {[...items, { href: '#contact', label: 'Contact', current: false }].map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              aria-current={l.current ? 'page' : undefined}
+              onClick={() => setOpen(false)}
+            >
               {l.label}
             </a>
           ))}

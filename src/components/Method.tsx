@@ -25,13 +25,7 @@ export function Method() {
   })
 
   return (
-    <section
-      className="method-pin"
-      id="method"
-      ref={ref}
-      data-overlap
-      aria-labelledby="method-title"
-    >
+    <section className="method-pin" id="method" ref={ref} aria-labelledby="method-title">
       <div className="method-stage">
         <div className="wrap method-grid">
           <div className="method-text">
@@ -49,7 +43,7 @@ export function Method() {
               model’s weights can be squeezed that far without losing what matters. That’s what
               we’re testing.
             </p>
-            <a className="text-link" href="#approach">
+            <a className="text-link" href="/research#approach">
               How we work <span aria-hidden="true">→</span>
             </a>
           </div>

@@ -2,6 +2,7 @@ import '@fontsource-variable/inter'
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App'
+import { normalizePath } from './routes'
 import './style.css'
 
 const root = document.getElementById('root')
@@ -9,7 +10,7 @@ if (!root) throw new Error('Missing #root element')
 
 const app = (
   <StrictMode>
-    <App />
+    <App path={normalizePath(window.location.pathname)} />
   </StrictMode>
 )
 

@@ -1,19 +1,16 @@
+import { useEffect } from 'react'
 import { Footer } from './components/Closing'
 import Header from './components/Header'
-import Hero from './components/Hero'
-import { Method } from './components/Method'
-import { Scoreboard } from './components/Scoreboard'
-import { useEffect } from 'react'
+import Home from './pages/Home'
+import ResearchPage from './pages/ResearchPage'
 import { initReveal } from './reveal'
-import { Approach } from './components/Approach'
-import { Research } from './components/Research'
-import { Thesis } from './components/Thesis'
-import { Company } from './components/WhyAfrica'
 
-export default function App() {
+export default function App({ path }: { path: string }) {
+  const research = path === '/research'
+
   useEffect(() => initReveal(), [])
 
-  // The pinned sections change the page height after load; settle on a #hash target afterwards.
+  // Pinned sections change the page height after load; settle on a #hash target afterwards.
   useEffect(() => {
     const id = window.location.hash.slice(1)
     if (!id) return
@@ -24,21 +21,13 @@ export default function App() {
   }, [])
 
   return (
-    <>
-      <a className="skip-link" href="#research">
+    <div className={research ? 'page page-black' : 'page'}>
+      <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Header />
-      <main id="main">
-        <Hero />
-        <Thesis />
-        <Research />
-        <Company />
-        <Method />
-        <Scoreboard />
-        <Approach />
-      </main>
+      <Header page={research ? 'research' : 'home'} />
+      {research ? <ResearchPage /> : <Home />}
       <Footer />
-    </>
+    </div>
   )
 }
