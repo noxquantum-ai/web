@@ -27,9 +27,17 @@ export function useScrollScrub<T extends HTMLElement>(onProgress?: (p: number, e
     const update = () => {
       raf = 0
       const box = el.getBoundingClientRect()
-      const span = box.height - window.innerHeight
+      const vh = window.innerHeight
+      // A section marked data-overlap lets the next one slide over its pinned stage for the
+      // last screen of scrolling; --c (0 to 1) says how far it has been covered.
+      const over = 'overlap' in el.dataset ? vh : 0
+      const span = box.height - vh - over
       const p = span > 0 ? Math.min(1, Math.max(0, -box.top / span)) : 1
       el.style.setProperty('--p', p.toFixed(4))
+      el.style.setProperty(
+        '--c',
+        over ? Math.min(1, Math.max(0, (-box.top - span) / over)).toFixed(4) : '0',
+      )
       cb.current?.(p, el)
     }
     const onScroll = () => {
@@ -57,6 +65,7 @@ export function useScrollScrub<T extends HTMLElement>(onProgress?: (p: number, e
         io?.disconnect()
         delete el.dataset.armed
         el.style.setProperty('--p', '1')
+        el.style.setProperty('--c', '0')
         cb.current?.(1, el)
         window.removeEventListener('scroll', onScroll)
         window.removeEventListener('resize', onScroll)

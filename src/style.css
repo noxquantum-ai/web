@@ -490,7 +490,8 @@ button:focus-visible {
 }
 
 .method-pin[data-armed] {
-  height: 300svh;
+  height: 380svh;
+  margin-bottom: -100svh;
 }
 
 .method-pin[data-armed] .method-stage {
@@ -1029,11 +1030,12 @@ button:focus-visible {
 
 /* Pinned: the stage stays on screen while scrolling opens the panels in turn. */
 .research-pin[data-armed] {
-  height: 260svh;
+  height: 340svh;
+  margin-bottom: -100svh;
 }
 
 .research-pin[data-armed] .pin-anchor {
-  top: calc((100% - 100svh) * var(--at));
+  top: calc((100% - 200svh) * var(--at));
 }
 
 .research-pin[data-armed] .research-stage {
@@ -1303,7 +1305,8 @@ button:focus-visible {
 }
 
 .africa-pin[data-armed] {
-  height: 380svh;
+  height: 440svh;
+  margin-bottom: -100svh;
 }
 
 .africa-pin[data-armed] .africa-stage {
@@ -1411,4 +1414,48 @@ button:focus-visible {
   .menu-toggle {
     margin-left: auto;
   }
+}
+
+/* Sheets: each section is a rounded sheet that slides over the one before it. */
+
+:root {
+  --tint-2: #eceae2;
+  --sheet-radius: 28px;
+}
+
+#research,
+#company,
+#method,
+#scoreboard,
+#approach,
+#contact {
+  position: relative;
+  margin-top: calc(var(--sheet-radius) * -1);
+  border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+}
+
+#research,
+#method,
+#approach {
+  background: var(--tint);
+}
+
+#scoreboard {
+  background: var(--tint-2);
+}
+
+#research,
+#method,
+#scoreboard,
+#approach {
+  box-shadow: 0 -16px 40px -14px rgba(0, 0, 0, 0.12);
+}
+
+/* The pinned stage shrinks and dims as the next sheet slides over it. */
+.research-pin[data-armed] .research-stage,
+.africa-pin[data-armed] .africa-stage,
+.method-pin[data-armed] .method-stage {
+  transform-origin: 50% 40%;
+  transform: scale(calc(1 - 0.07 * var(--c, 0)));
+  opacity: calc(1 - 0.6 * var(--c, 0));
 }

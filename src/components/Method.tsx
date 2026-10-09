@@ -25,7 +25,13 @@ export function Method() {
   })
 
   return (
-    <section className="method-pin" id="method" ref={ref} aria-labelledby="method-title">
+    <section
+      className="method-pin"
+      id="method"
+      ref={ref}
+      data-overlap
+      aria-labelledby="method-title"
+    >
       <div className="method-stage">
         <div className="wrap method-grid">
           <div className="method-text">

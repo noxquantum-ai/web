@@ -25,6 +25,7 @@ export function Company() {
   return (
     <section
       className="africa-pin"
+      data-overlap
       id="company"
       ref={ref}
       style={{ '--n': WORDS.length } as CSSProperties}
