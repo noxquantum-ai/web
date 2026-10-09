@@ -1,6 +1,3 @@
 dist
 dist-server
 package-lock.json
-# Hero is frozen; keep its files untouched
-src/components/Hero.tsx
-src/visuals.ts
