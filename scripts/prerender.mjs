@@ -9,20 +9,16 @@ import path from 'node:path'
 const root = path.resolve(import.meta.dirname, '..')
 const dist = path.join(root, 'dist')
 
-// Absolute URLs (canonical, Open Graph, structured data, sitemap) must point at the host that is actually
-// serving the site, or crawlers and link previews cannot fetch them. On Vercel that comes from the build
-// environment: the production domain (a custom domain once one is attached) or this deployment's URL.
-// SITE_URL overrides it; with neither, it falls back to the intended domain.
+// Absolute URLs (canonical, Open Graph, structured data, sitemap) name the host the site is served from.
+// Production uses the custom domain. Preview deployments name their own URL and are kept out of search.
+// SITE_URL overrides everything.
 const DEFAULT_SITE = 'https://noxquantum.com'
-const vercelHost =
-  process.env.VERCEL_ENV === 'production'
-    ? process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : process.env.VERCEL_URL
+const isPreview = process.env.VERCEL_ENV === 'preview' || process.env.VERCEL_ENV === 'development'
 const SITE = (
-  process.env.SITE_URL || (vercelHost ? `https://${vercelHost}` : DEFAULT_SITE)
+  process.env.SITE_URL ||
+  (isPreview && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : DEFAULT_SITE)
 ).replace(/\/$/, '')
-// Only set on the production deployment: a preview should never be indexed, so it gets noindex.
-const isProduction = !vercelHost || process.env.VERCEL_ENV === 'production'
+const isProduction = !isPreview
 const VERIFY = process.env.GOOGLE_SITE_VERIFICATION || ''
 const TODAY = new Date().toISOString().slice(0, 10)
 console.log(`Site URL: ${SITE}${isProduction ? '' : ' (preview, noindex)'}`)
