@@ -1,13 +1,17 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App'
 import './style.css'
 
 const root = document.getElementById('root')
 if (!root) throw new Error('Missing #root element')
 
-createRoot(root).render(
+const app = (
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 )
+
+// The production build ships pre-rendered HTML, so hydrate it; in dev the root is empty.
+if (root.firstElementChild) hydrateRoot(root, app)
+else createRoot(root).render(app)
