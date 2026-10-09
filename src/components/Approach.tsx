@@ -29,6 +29,7 @@ export function Approach() {
     const items = Array.from(el.children) as HTMLElement[]
     el.dataset.armed = ''
     let raf = 0
+    let near = true
 
     const update = () => {
       raf = 0
@@ -41,12 +42,22 @@ export function Approach() {
       })
     }
     const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update)
+      if (near && !raf) raf = requestAnimationFrame(update)
     }
+    // Skip all scroll work while the rail is more than a screen away.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        near = entry.isIntersecting
+        if (near) onScroll()
+      },
+      { rootMargin: '100% 0px' },
+    )
+    io.observe(el)
     update()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
     return () => {
+      io.disconnect()
       cancelAnimationFrame(raf)
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)

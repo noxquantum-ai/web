@@ -21,6 +21,8 @@ export function useScrollScrub<T extends HTMLElement>(onProgress?: (p: number, e
     const calm = window.matchMedia('(prefers-reduced-motion: reduce)')
     let raf = 0
     let armed = false
+    let near = true
+    let io: IntersectionObserver | undefined
 
     const update = () => {
       raf = 0
@@ -31,7 +33,7 @@ export function useScrollScrub<T extends HTMLElement>(onProgress?: (p: number, e
       cb.current?.(p, el)
     }
     const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update)
+      if (near && !raf) raf = requestAnimationFrame(update)
     }
     const arm = () => {
       const shouldArm = wide.matches && !calm.matches
@@ -42,7 +44,17 @@ export function useScrollScrub<T extends HTMLElement>(onProgress?: (p: number, e
         update()
         window.addEventListener('scroll', onScroll, { passive: true })
         window.addEventListener('resize', onScroll)
+        // Only do scroll work while the section is within a screen of the viewport.
+        io = new IntersectionObserver(
+          ([entry]) => {
+            near = entry.isIntersecting
+            if (!raf) raf = requestAnimationFrame(update) // settle on 0 or 1 when leaving
+          },
+          { rootMargin: '100% 0px' },
+        )
+        io.observe(el)
       } else {
+        io?.disconnect()
         delete el.dataset.armed
         el.style.setProperty('--p', '1')
         cb.current?.(1, el)
@@ -59,6 +71,7 @@ export function useScrollScrub<T extends HTMLElement>(onProgress?: (p: number, e
       calm.removeEventListener('change', arm)
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
+      io?.disconnect()
       cancelAnimationFrame(raf)
       delete el.dataset.armed
     }
