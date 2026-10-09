@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { initReveal } from './reveal'
 import { Approach } from './components/Approach'
 import { Research } from './components/Research'
+import { Thesis } from './components/Thesis'
 import { Company } from './components/WhyAfrica'
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
       <Header />
       <main id="main">
         <Hero />
+        <Thesis />
         <Research />
         <Company />
         <Method />
