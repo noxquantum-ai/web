@@ -45,7 +45,7 @@ body {
   background: var(--tint);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
@@ -212,12 +212,12 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  padding: 14px 28px;
+  padding: 12px 24px;
   border-radius: var(--radius);
-  min-height: 52px;
+  min-height: 46px;
   border: 1px solid transparent;
   white-space: nowrap;
 }
@@ -309,12 +309,12 @@ button:focus-visible {
 /* Sections */
 
 .section {
-  padding: 120px 0;
+  padding: 104px 0;
 }
 
 .section-title {
   font-weight: 600;
-  font-size: clamp(30px, 3.6vw, 48px);
+  font-size: clamp(26px, 2.9vw, 40px);
   line-height: 1.05;
   letter-spacing: -0.028em;
   margin: 0 0 16px;
@@ -339,7 +339,7 @@ button:focus-visible {
 }
 
 .rail-sub {
-  font-size: 17px;
+  font-size: 16px;
   color: var(--muted);
   margin: 0;
   max-width: 20em;
@@ -475,7 +475,7 @@ button:focus-visible {
 .method-stats dd {
   margin: 0;
   font-family: var(--mono);
-  font-size: clamp(20px, 2.2vw, 30px);
+  font-size: clamp(18px, 1.8vw, 24px);
   font-variant-numeric: tabular-nums;
 }
 
@@ -700,12 +700,12 @@ button:focus-visible {
   overflow: hidden;
   background: var(--black);
   color: #fff;
-  padding: 130px 0;
+  padding: 96px 0;
 }
 
 .cta-band h2 {
   font-weight: 600;
-  font-size: clamp(30px, 3.8vw, 52px);
+  font-size: clamp(24px, 2.7vw, 36px);
   line-height: 1.06;
   letter-spacing: -0.03em;
   max-width: 17em;
@@ -715,8 +715,8 @@ button:focus-visible {
 
 .cta-band p {
   color: var(--dark-muted);
-  font-size: 18px;
-  margin: 0 0 40px;
+  font-size: 16px;
+  margin: 0 0 32px;
 }
 
 /* Contact band: lines that turn toward the cursor */
@@ -740,7 +740,7 @@ button:focus-visible {
 .site-footer {
   background: var(--black);
   color: #fff;
-  padding: 80px 0 0;
+  padding: 60px 0 0;
   border-top: 1px solid var(--dark-line);
 }
 
@@ -748,12 +748,12 @@ button:focus-visible {
   display: grid;
   grid-template-columns: 6fr 3fr 3fr;
   gap: 48px;
-  padding-bottom: 64px;
+  padding-bottom: 44px;
 }
 
 .footer-brand p {
   color: var(--dark-muted);
-  font-size: 15px;
+  font-size: 14px;
   margin: 14px 0 0;
   max-width: 26em;
 }
@@ -950,7 +950,7 @@ button:focus-visible {
 
 .protocol h3 {
   font-weight: 600;
-  font-size: clamp(22px, 2.4vw, 30px);
+  font-size: clamp(20px, 2vw, 26px);
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin: 0 0 10px;
@@ -1121,7 +1121,7 @@ button:focus-visible {
 
 .panel-name {
   font-weight: 600;
-  font-size: clamp(22px, 2.4vw, 32px);
+  font-size: clamp(20px, 2vw, 28px);
   line-height: 1.1;
   letter-spacing: -0.02em;
   max-width: 12em;
@@ -1215,7 +1215,7 @@ button:focus-visible {
 .africa-statement {
   margin: 0 0 28px;
   font-weight: 500;
-  font-size: clamp(30px, 3.6vw, 54px);
+  font-size: clamp(26px, 3vw, 44px);
   line-height: 1.08;
   letter-spacing: -0.035em;
 }
