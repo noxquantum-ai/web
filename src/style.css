@@ -1324,3 +1324,57 @@ button:focus-visible {
     transition: none;
   }
 }
+
+/* Research: motion inside the pinned card, driven by progress through the current thread */
+
+.thread-card.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.thread-ghost {
+  position: absolute;
+  right: 28px;
+  top: 8px;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: clamp(150px, 17vw, 250px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--ink);
+  opacity: 0.05;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.thread-bar {
+  margin-top: 28px;
+  height: 2px;
+  background: var(--line);
+}
+
+.thread-bar i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--ink);
+  transform-origin: left;
+}
+
+.research-pin[data-armed] .thread-card.spotlight-card {
+  transform: translateY(calc((0.5 - var(--lp, 0.5)) * 36px));
+}
+
+.research-pin[data-armed] .thread-ghost {
+  transform: translateX(calc((0.5 - var(--lp, 0.5)) * 90px));
+}
+
+.research-pin[data-armed] .thread-glyph * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, calc(var(--lp, 1) * 2.6), 1));
+}
+
+.research-pin[data-armed] .thread-bar i {
+  transform: scaleX(var(--lp, 1));
+}

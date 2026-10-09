@@ -11,7 +11,11 @@ const threads = [
     glyph: (
       <>
         {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-          <path key={i} d={`M4 ${10 + i * 10}H34C58 ${10 + i * 10} 62 40 86 40H116`} />
+          <path
+            key={i}
+            pathLength={1}
+            d={`M4 ${10 + i * 10}H34C58 ${10 + i * 10} 62 40 86 40H116`}
+          />
         ))}
       </>
     ),
@@ -23,8 +27,8 @@ const threads = [
     body: 'Before compressing anything, we decide which capabilities matter. Then we report where each method loses something, instead of hiding it in an average. It’s easy to make a model smaller. It’s harder to keep it useful.',
     glyph: (
       <>
-        <path d="M4 16H92M4 40H68M4 64H108" />
-        <path d="M92 8v16M68 32v16M108 56v16" />
+        <path pathLength={1} d="M4 16H92M4 40H68M4 64H108" />
+        <path pathLength={1} d="M92 8v16M68 32v16M108 56v16" />
       </>
     ),
   },
@@ -35,8 +39,8 @@ const threads = [
     body: 'A smaller model only helps if it runs faster on the hardware people have. We time inference on limited GPUs, because that’s where a method has to work.',
     glyph: (
       <>
-        <circle cx="60" cy="42" r="30" />
-        <path d="M60 42V22M60 42l16 10M60 8v6M60 70v6M26 42h6M88 42h6" />
+        <circle pathLength={1} cx="60" cy="42" r="30" />
+        <path pathLength={1} d="M60 42V22M60 42l16 10M60 8v6M60 70v6M26 42h6M88 42h6" />
       </>
     ),
   },
@@ -45,7 +49,10 @@ const threads = [
 /** A long section: the stage stays pinned while scrolling moves through the three threads. */
 export function Research() {
   const ref = useScrollScrub<HTMLElement>((p, el) => {
-    el.dataset.active = String(Math.min(threads.length - 1, Math.floor(p * threads.length)))
+    const idx = Math.min(threads.length - 1, Math.floor(p * threads.length))
+    el.dataset.active = String(idx)
+    // Progress through the current thread (0 to 1), for the motion inside the card.
+    el.style.setProperty('--lp', (p * threads.length - idx).toFixed(4))
   })
 
   const jump = (i: number) => {
@@ -97,12 +104,18 @@ export function Research() {
                   spotlightSize={320}
                   intensity={0.3}
                 >
+                  <span className="thread-ghost" aria-hidden="true">
+                    {t.num}
+                  </span>
                   <p className="thread-num">{t.num} / 03</p>
                   <svg className="thread-glyph" viewBox="0 0 120 84" aria-hidden="true">
                     {t.glyph}
                   </svg>
                   <h3>{t.title}</h3>
                   <p className="thread-body">{t.body}</p>
+                  <div className="thread-bar" aria-hidden="true">
+                    <i />
+                  </div>
                 </SpotlightCard>
               </article>
             ))}
