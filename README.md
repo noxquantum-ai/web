@@ -60,8 +60,12 @@ Cloudflare in front. This has not been load-tested against the live deployment.
 
 ## Before launch
 
-- The site assumes the domain `https://noxquantum.com`. It appears in `index.html`,
-  `public/robots.txt` and `public/sitemap.xml`.
+- **Absolute URLs follow the host.** The canonical URL, Open Graph image, sitemap and robots.txt are written at
+  build time (`scripts/prerender.mjs`) from the Vercel environment: the production domain (a custom domain once
+  one is attached) or the deployment's own URL. Set `SITE_URL` to override it. Link previews (WhatsApp, Slack, X)
+  only show the image if it is served from the address in the tag. Vercel's per-deployment preview links are
+  behind a login, so crawlers cannot preview them; share the production domain. Previews are cached, so a new
+  link (or the Facebook Sharing Debugger) is needed to refresh one.
+- The default domain is `https://noxquantum.com` (in `index.html`); the build swaps in the real host as above.
 - Confirm `hello@noxquantum.com` receives mail.
 - `public/og-image.png` is the social preview (1200×630).
-- `src/components/reactbits/` holds components from [React Bits](https://reactbits.dev), used under its MIT + Commons Clause license (see `LICENSE.md` there).

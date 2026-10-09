@@ -88,3 +88,53 @@ export function useScrollScrub<T extends HTMLElement>(onProgress?: (p: number, e
 
   return ref
 }
+
+/**
+ * Progress for an ordinary, unpinned block as it scrolls up the screen: `--p` runs from 0 (its top
+ * enters the lower part of the viewport) to 1 (its top has reached the upper part). Sets `data-armed`
+ * once running. Without JS, with reduced motion, it stays in its finished state.
+ */
+export function useScrollThrough<T extends HTMLElement>() {
+  const ref = useRef<T>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    let near = true
+
+    const update = () => {
+      raf = 0
+      const vh = window.innerHeight
+      const top = el.getBoundingClientRect().top
+      const p = Math.min(1, Math.max(0, (vh * 0.92 - top) / (vh * 0.7)))
+      el.style.setProperty('--p', p.toFixed(4))
+    }
+    const onScroll = () => {
+      if (near && !raf) raf = requestAnimationFrame(update)
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        near = entry.isIntersecting
+        if (!raf) raf = requestAnimationFrame(update)
+      },
+      { rootMargin: '20% 0px' },
+    )
+
+    el.dataset.armed = ''
+    update()
+    io.observe(el)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      io.disconnect()
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      delete el.dataset.armed
+    }
+  }, [])
+
+  return ref
+}

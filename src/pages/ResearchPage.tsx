@@ -1,5 +1,3 @@
-import SplitFlapText from '../components/reactbits/SplitFlapText'
-
 const threads = [
   {
     id: 'compression',
@@ -146,19 +144,7 @@ export default function ResearchPage() {
                     <th scope="row">
                       <span className="compare-name">{r.name}</span>
                       <small>{r.note}</small>
-                      {r.ours && (
-                        <span className="compare-flap" aria-hidden="true">
-                          <SplitFlapText
-                            words={['PENDING']}
-                            padTo={7}
-                            fontSize={13}
-                            gap={2}
-                            tileRadius={3}
-                            tileColor="#1d1d1d"
-                            textColor="#ffffff"
-                          />
-                        </span>
-                      )}
+                      {r.ours && <span className="compare-pending">Pending</span>}
                     </th>
                     {columns.map((c) => (
                       <td key={c.name} data-label={c.name}>
