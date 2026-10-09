@@ -1396,8 +1396,7 @@ button:focus-visible {
   }
 }
 
-/* Skip rendering work for below-the-fold sections until they are near the viewport. */
-#scoreboard,
+/* Skip rendering work for the contact band and footer until they are near the viewport. */
 .cta-band,
 .site-footer {
   content-visibility: auto;
