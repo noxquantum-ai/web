@@ -470,7 +470,7 @@ button:focus-visible {
 }
 
 .method-pin[data-armed] {
-  height: 280svh;
+  height: 230svh;
 }
 
 .method-pin[data-armed] .method-stage {
@@ -969,7 +969,7 @@ button:focus-visible {
 }
 
 .africa-pin[data-armed] {
-  height: 440svh;
+  height: 360svh;
   margin-bottom: -100svh;
 }
 
