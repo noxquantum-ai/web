@@ -214,6 +214,16 @@ button:focus-visible {
     --select: var(--select-dark);
 }
 
+.cta-band {
+  --focus: #fff;
+    --select: var(--select-dark);
+}
+
+.site-footer {
+  --focus: #fff;
+    --select: var(--select-dark);
+}
+
 /* Buttons */
 
 .btn {
@@ -648,7 +658,9 @@ button:focus-visible {
 /* CTA band */
 
 .cta-band {
-  background: var(--black);
+  position: relative;
+    overflow: hidden;
+    background: var(--black);
     color: #fff;
     padding: 130px 0;
 }
@@ -667,6 +679,22 @@ button:focus-visible {
   color: var(--dark-muted);
     font-size: 18px;
     margin: 0 0 40px;
+}
+
+/* Contact band: lines that turn toward the cursor */
+
+.cta-lines {
+  position: absolute;
+    top: 50%;
+    right: max(32px, calc((100vw - 1360px) / 2 + 32px));
+    width: min(40vw, 520px);
+    height: 74%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.cta-band .wrap {
+  position: relative;
 }
 
 /* Footer */
@@ -730,7 +758,11 @@ button:focus-visible {
 }
 
 .footer-base {
-  border-top: 1px solid var(--dark-line);
+  display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--dark-line);
     padding-top: 26px;
     padding-bottom: 36px;
 }
@@ -741,11 +773,23 @@ button:focus-visible {
     color: var(--dark-faint);
 }
 
+.footer-base a {
+  color: var(--dark-muted);
+}
+
+.footer-base a:hover {
+  color: #fff;
+}
+
 @media (max-width: 920px) {
   /* Responsive */
 
   .wrap {
     padding: 0 24px;
+  }
+
+  .cta-lines {
+    display: none;
   }
 
   .section {
