@@ -804,6 +804,118 @@ button:focus-visible {
 
 }
 
+/* Approach rail */
+
+.protocol {
+  --p: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 44px;
+    position: relative;
+}
+
+.protocol::before {
+  content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--line);
+}
+
+.protocol::after {
+  content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--line);
+}
+
+.protocol::after {
+  background: var(--ink);
+    transform-origin: top;
+    transform: scaleY(var(--p));
+}
+
+.protocol li {
+  position: relative;
+    padding-bottom: 56px;
+}
+
+.protocol li:last-child {
+  padding-bottom: 0;
+}
+
+.protocol li::before {
+  content: '';
+    position: absolute;
+    left: -44px;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    transition:
+      background 0.3s ease,
+      transform 0.3s ease;
+}
+
+.protocol[data-armed] li[data-reached='false']::before {
+  border-color: var(--line);
+}
+
+.protocol[data-armed] li[data-reached='false'] {
+  opacity: 0.45;
+}
+
+.protocol li {
+  transition: opacity 0.4s ease;
+}
+
+.protocol li[data-reached='true']::before {
+  background: var(--ink);
+}
+
+.protocol-num {
+  display: block;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--faint);
+    margin-bottom: 6px;
+}
+
+.protocol h3 {
+  font-weight: 600;
+    font-size: clamp(22px, 2.4vw, 30px);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0 0 10px;
+}
+
+.protocol p {
+  margin: 0;
+    color: var(--muted);
+    max-width: 36em;
+}
+
+.protocol-now h3 {
+  display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.protocol .protocol-now::before {
+  border-color: var(--accent-ink);
+}
+
+.protocol .protocol-now[data-reached='true']::before {
+  background: var(--accent-ink);
+}
+
 /* Flap board, source note */
 
 .flap-board {
@@ -824,6 +936,17 @@ button:focus-visible {
 
 .source a:hover {
   color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .protocol li {
+    transition: none;
+  }
+
+  .protocol li::before {
+    transition: none;
+  }
+
 }
 
 /* Eyebrow label */
