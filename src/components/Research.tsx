@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import type { CSSProperties } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useScrollScrub } from '../useScrollScrub'
 import SpotlightCard from './reactbits/SpotlightCard'
 
 const threads = [
@@ -46,6 +48,17 @@ const indexFromHash = () => threads.findIndex((t) => `#${t.id}` === window.locat
 /** Three panels side by side; the one you hover, focus or click opens up. They stack on phones. */
 export function Research() {
   const [active, setActive] = useState(0)
+  const lastStep = useRef(0)
+
+  // While the section is pinned, scrolling opens the panels one after another. Hovering or
+  // clicking still works; scrolling only takes over again when it reaches the next panel.
+  const ref = useScrollScrub<HTMLElement>((p) => {
+    const step = Math.min(threads.length - 1, Math.floor(p * threads.length))
+    if (step !== lastStep.current) {
+      lastStep.current = step
+      setActive(step)
+    }
+  })
 
   // Footer links (#compression and so on) open the matching panel.
   useEffect(() => {
@@ -59,54 +72,63 @@ export function Research() {
   }, [])
 
   return (
-    <section className="section" id="research" aria-labelledby="research-title">
-      <div className="wrap">
-        <div className="research-head" data-reveal>
-          <h2 className="section-title" id="research-title">
-            Research
-          </h2>
-          <p className="rail-sub">
-            We work on three problems. Each is judged on quality, memory use and how fast the model
-            runs.
-          </p>
-        </div>
-        <ol className="panels" data-active={active} data-reveal>
-          {threads.map((t, i) => (
-            <li
-              key={t.id}
-              id={t.id}
-              className="panel"
-              data-active={i === active}
-              onPointerEnter={(e) => e.pointerType !== 'touch' && setActive(i)}
-            >
-              <SpotlightCard
-                theme="light"
-                className="panel-card"
-                spotlightSize={260}
-                intensity={0.3}
+    <section className="research-pin" id="research" ref={ref} aria-labelledby="research-title">
+      {threads.map((t, i) => (
+        <span
+          key={t.id}
+          id={t.id}
+          className="pin-anchor"
+          style={{ '--at': (i + 0.5) / threads.length, '--i': i } as CSSProperties}
+        />
+      ))}
+      <div className="research-stage">
+        <div className="wrap">
+          <div className="research-head">
+            <h2 className="section-title" id="research-title">
+              Research
+            </h2>
+            <p className="rail-sub">
+              We work on three problems. Each is judged on quality, memory use and how fast the
+              model runs.
+            </p>
+          </div>
+          <ol className="panels" data-active={active}>
+            {threads.map((t, i) => (
+              <li
+                key={t.id}
+                className="panel"
+                data-active={i === active}
+                onPointerEnter={(e) => e.pointerType !== 'touch' && setActive(i)}
               >
-                <h3 className="panel-title">
-                  <button
-                    type="button"
-                    aria-expanded={i === active}
-                    aria-controls={`${t.id}-body`}
-                    onClick={() => setActive(i)}
-                    onFocus={() => setActive(i)}
-                  >
-                    <span className="panel-num">{t.num}</span>
-                    <span className="panel-name">{t.title}</span>
-                  </button>
-                </h3>
-                <div className="panel-body" id={`${t.id}-body`}>
-                  <svg className="panel-glyph" viewBox="0 0 120 84" aria-hidden="true">
-                    {t.glyph}
-                  </svg>
-                  <p>{t.body}</p>
-                </div>
-              </SpotlightCard>
-            </li>
-          ))}
-        </ol>
+                <SpotlightCard
+                  theme="light"
+                  className="panel-card"
+                  spotlightSize={260}
+                  intensity={0.3}
+                >
+                  <h3 className="panel-title">
+                    <button
+                      type="button"
+                      aria-expanded={i === active}
+                      aria-controls={`${t.id}-body`}
+                      onClick={() => setActive(i)}
+                      onFocus={() => setActive(i)}
+                    >
+                      <span className="panel-num">{t.num}</span>
+                      <span className="panel-name">{t.title}</span>
+                    </button>
+                  </h3>
+                  <div className="panel-body" id={`${t.id}-body`}>
+                    <svg className="panel-glyph" viewBox="0 0 120 84" aria-hidden="true">
+                      {t.glyph}
+                    </svg>
+                    <p>{t.body}</p>
+                  </div>
+                </SpotlightCard>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   )

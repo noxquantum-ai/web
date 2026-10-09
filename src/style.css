@@ -1012,8 +1012,55 @@ button:focus-visible {
 
 /* Research: three panels side by side; the active one opens */
 
+.research-pin {
+  position: relative;
+}
+
+.research-stage {
+  padding: 120px 0;
+}
+
+.pin-anchor {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  top: calc(var(--i, 0) * 33.333%);
+  pointer-events: none;
+}
+
 .research-head {
   margin-bottom: 56px;
+}
+
+/* Pinned: the stage stays on screen while scrolling opens the panels in turn. */
+.research-pin[data-armed] {
+  height: 260svh;
+}
+
+.research-pin[data-armed] .pin-anchor {
+  top: calc((100% - 100svh) * var(--at));
+}
+
+.research-pin[data-armed] .research-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.research-pin[data-armed] .research-stage .wrap {
+  width: 100%;
+}
+
+.research-pin[data-armed] .research-head {
+  margin-bottom: 40px;
+}
+
+.research-pin[data-armed] .panel-card.spotlight-card {
+  min-height: clamp(400px, calc(100svh - 330px), 540px);
 }
 
 .panels {
