@@ -6,8 +6,6 @@ export interface Route {
   description?: string
 }
 
-export const SITE = 'https://noxquantum.com'
-
 export const routes: Route[] = [
   { path: '/', file: 'index.html' },
   {

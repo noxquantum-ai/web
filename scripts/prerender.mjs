@@ -7,12 +7,27 @@ import path from 'node:path'
 
 const root = path.resolve(import.meta.dirname, '..')
 const dist = path.join(root, 'dist')
-const SITE = 'https://noxquantum.com'
+
+// Absolute URLs (canonical, Open Graph image, sitemap) must point at the host that is actually serving the
+// site, or link previews (WhatsApp, Slack, X) cannot fetch the image. On Vercel that comes from the build
+// environment: the production domain (a custom domain once one is attached) or this deployment's URL.
+// SITE_URL overrides it; with neither, it falls back to the intended domain.
+const DEFAULT_SITE = 'https://noxquantum.com'
+const vercelHost =
+  process.env.VERCEL_ENV === 'production'
+    ? process.env.VERCEL_PROJECT_PRODUCTION_URL
+    : process.env.VERCEL_URL
+const SITE = (
+  process.env.SITE_URL || (vercelHost ? `https://${vercelHost}` : DEFAULT_SITE)
+).replace(/\/$/, '')
 
 const { render, routes } = await import(
   pathToFileURL(path.join(root, 'dist-server', 'entry-server.js')).href
 )
-const template = await readFile(path.join(dist, 'index.html'), 'utf8')
+const template = (await readFile(path.join(dist, 'index.html'), 'utf8')).replaceAll(
+  DEFAULT_SITE,
+  SITE,
+)
 if (!template.includes('<!--app-html-->')) throw new Error('Placeholder missing in dist/index.html')
 
 // Stylesheet and font are the same for every page.
@@ -59,6 +74,20 @@ for (const route of routes) {
   await writeFile(path.join(dist, route.file), html)
   console.log(`Pre-rendered ${route.file} (${route.path})`)
 }
+
+// Sitemap and robots.txt name the host too, so they are written here instead of kept as static files.
+const urls = [...routes.map((r) => r.path), '/privacy']
+await writeFile(
+  path.join(dist, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
+    .map((u) => `  <url><loc>${SITE}${u === '/' ? '/' : u}</loc></url>`)
+    .join('\n')}\n</urlset>\n`,
+)
+await writeFile(
+  path.join(dist, 'robots.txt'),
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`,
+)
+console.log(`Site URL: ${SITE}`)
 
 if (sheet) await rm(path.join(dist, sheet[1]))
 await rm(path.join(root, 'dist-server'), { recursive: true, force: true })
