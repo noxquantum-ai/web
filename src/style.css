@@ -1322,7 +1322,7 @@ button:focus-visible {
 
 .africa-pin[data-armed] .w {
   --k: clamp(0, calc((var(--p) - 0.03) / 0.3 * var(--n) - var(--i)), 1);
-  opacity: calc(0.14 + 0.86 * var(--k));
+  opacity: calc(0.4 + 0.6 * var(--k));
 }
 
 .africa-pin[data-armed] .source {
