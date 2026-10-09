@@ -80,8 +80,8 @@ export function Company() {
                 ))}
               </div>
               <figcaption>
-                GPU memory sizes we’re designing for. This counts weights only, not activations or
-                cache, and it’s simple arithmetic, not a measurement.
+                Common GPU memory sizes. This counts weights only, not activations or cache, and
+                it’s simple arithmetic, not a measurement.
               </figcaption>
             </figure>
 

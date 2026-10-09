@@ -74,10 +74,6 @@ export function Scoreboard() {
               ))}
             </tbody>
           </table>
-          <p className="compare-note">
-            Nothing is measured yet, so the bars are empty. We’ll fill in each row once we have real
-            numbers.
-          </p>
         </div>
       </div>
     </section>
