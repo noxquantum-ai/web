@@ -852,10 +852,13 @@ button:focus-visible {
   border-color: var(--line);
 }
 .protocol[data-armed] li[data-reached='false'] {
-  opacity: 0.45;
+  transform: translateY(10px);
+}
+.protocol[data-armed] li[data-reached='false'] h3 {
+  color: var(--muted);
 }
 .protocol li {
-  transition: opacity 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .protocol li[data-reached='true']::before {
   background: var(--ink);
@@ -875,6 +878,7 @@ button:focus-visible {
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin: 0 0 10px;
+  transition: color 0.4s ease;
 }
 
 .protocol p {
