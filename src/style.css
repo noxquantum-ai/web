@@ -1010,187 +1010,146 @@ button:focus-visible {
   color: var(--dark-faint);
 }
 
-/* Research: a long section; the stage stays pinned while you scroll through the threads */
+/* Research: three panels side by side; the active one opens */
 
-.research-stage {
-  padding: 120px 0;
+.research-head {
+  margin-bottom: 56px;
 }
 
-.research-grid {
-  display: grid;
-  grid-template-columns: 4fr 8fr;
-  gap: 72px;
-  align-items: start;
-}
-
-.research-side .section-title {
-  margin: 0 0 14px;
-}
-
-.research-index {
-  display: none;
+.panels {
   list-style: none;
-  margin: 44px 0 0;
+  margin: 0;
   padding: 0;
-  position: relative;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  transition: grid-template-columns 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.research-index::before,
-.research-index::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--line);
+.panels[data-active='0'] {
+  grid-template-columns: 3.2fr 1fr 1fr;
+}
+.panels[data-active='1'] {
+  grid-template-columns: 1fr 3.2fr 1fr;
+}
+.panels[data-active='2'] {
+  grid-template-columns: 1fr 1fr 3.2fr;
 }
 
-.research-index::after {
-  background: var(--ink);
-  transform-origin: top;
-  transform: scaleY(var(--p, 1));
-}
-
-.research-index button {
+.panel {
+  min-width: 0;
   display: flex;
-  gap: 14px;
+  scroll-margin-top: 24px;
+}
+
+.panel-card.spotlight-card {
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.panel-title button {
   width: 100%;
-  padding: 14px 0 14px 20px;
   background: none;
   border: 0;
-  text-align: left;
+  color: inherit;
   font: inherit;
-  font-size: 16px;
-  color: var(--faint);
+  text-align: left;
   cursor: pointer;
-  transition: color 0.4s ease;
+  padding: 36px 36px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
-.research-index button:hover {
-  color: var(--ink);
-}
-
-.research-index-num {
+.panel-num {
   font-family: var(--mono);
-  font-size: 13px;
-  padding-top: 3px;
-}
-
-.research-view {
-  display: grid;
-  gap: 20px;
-}
-
-.thread-card.spotlight-card {
-  height: 100%;
-  padding: 40px;
-  border-radius: 16px;
-}
-
-.thread-num {
-  margin: 0;
-  font-family: var(--mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--faint);
+  font-variant-numeric: tabular-nums;
 }
 
-.thread-glyph {
+.panel-name {
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 12em;
+}
+
+.panel-body {
+  padding: 0 36px 36px;
+  margin-top: 36px;
+  min-width: 26em;
+  transition: opacity 0.4s ease 0.15s;
+}
+
+.panel-glyph {
   display: block;
-  width: 150px;
-  height: 105px;
-  margin: 28px 0 8px;
+  width: 140px;
+  height: 98px;
+  margin-bottom: 32px;
   fill: none;
   stroke: var(--ink);
   stroke-width: 1.5;
   stroke-linecap: round;
 }
 
-.thread h3 {
-  margin: 20px 0 16px;
-  font-weight: 600;
-  font-size: clamp(26px, 3vw, 40px);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-}
-
-.thread-body {
+.panel-body p {
   margin: 0;
-  font-size: 18px;
   color: var(--muted);
   max-width: 34em;
 }
 
-.pin-anchor {
-  position: absolute;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  top: calc(var(--i, 0) * 33.333%);
-  pointer-events: none;
+@media (min-width: 921px) {
+  .panel-card.spotlight-card {
+    min-height: 540px;
+  }
+  .panel[data-active='false'] .panel-body {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.15s ease,
+      visibility 0s 0.15s;
+  }
+  .panel[data-active='false'] .panel-name {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    align-self: flex-start;
+    font-size: 20px;
+    margin-top: 12px;
+  }
 }
 
-.research-pin {
-  position: relative;
-}
-
-.research-pin[data-armed] {
-  height: 340svh;
-}
-
-.research-pin[data-armed] .pin-anchor {
-  top: calc((100% - 100svh) * var(--at));
-}
-
-.research-pin[data-armed] .research-stage {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
-.research-pin[data-armed] .research-grid {
-  width: 100%;
-  align-items: center;
-}
-.research-pin[data-armed] .research-index {
-  display: block;
-}
-
-.research-pin[data-armed] .research-view {
-  position: relative;
-  display: block;
-  height: 440px;
-}
-
-.research-pin[data-armed] .thread {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(28px);
-  transition:
-    opacity 0.55s ease,
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 0s 0.55s;
-}
-
-.research-pin[data-active='0'][data-armed] .thread[data-i='0'],
-.research-pin[data-active='1'][data-armed] .thread[data-i='1'],
-.research-pin[data-active='2'][data-armed] .thread[data-i='2'] {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  transition-delay: 0.1s, 0.1s, 0s;
-}
-
-.research-pin[data-active='0'] .research-index li:nth-child(1) button,
-.research-pin[data-active='1'] .research-index li:nth-child(2) button,
-.research-pin[data-active='2'] .research-index li:nth-child(3) button {
-  color: var(--ink);
-  font-weight: 600;
+@media (max-width: 920px) {
+  .panels,
+  .panels[data-active] {
+    grid-template-columns: 1fr;
+  }
+  .panel-card.spotlight-card {
+    min-height: 0;
+  }
+  .panel-title button {
+    padding: 28px 28px 0;
+  }
+  .panel-body {
+    min-width: 0;
+    margin-top: 20px;
+    padding: 0 28px 28px;
+  }
 }
 
 /* Why Africa: pinned and dark; scroll fills the statement, then builds the ruler */
@@ -1370,13 +1329,11 @@ button:focus-visible {
 }
 
 @media (max-width: 920px) {
-  .research-grid,
   .africa-grid,
   .method-grid {
     grid-template-columns: 1fr;
     gap: 36px;
   }
-  .research-stage,
   .africa-stage,
   .method-stage {
     padding: 88px 0;
@@ -1388,70 +1345,14 @@ button:focus-visible {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  .thread-card.spotlight-card {
-    padding: 28px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   [data-reveal],
-  .research-index button {
+  .panels,
+  .panel-body {
     transition: none;
   }
-}
-
-/* Research: motion inside the pinned card, driven by progress through the current thread */
-
-.thread-card.spotlight-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.thread-ghost {
-  position: absolute;
-  right: 28px;
-  top: 8px;
-  font-family: var(--mono);
-  font-weight: 600;
-  font-size: clamp(150px, 17vw, 250px);
-  line-height: 1;
-  letter-spacing: -0.06em;
-  color: var(--ink);
-  opacity: 0.05;
-  z-index: -1;
-  pointer-events: none;
-  user-select: none;
-}
-
-.thread-bar {
-  margin-top: 28px;
-  height: 2px;
-  background: var(--line);
-}
-
-.thread-bar i {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background: var(--ink);
-  transform-origin: left;
-}
-
-.research-pin[data-armed] .thread-card.spotlight-card {
-  transform: translateY(calc((0.5 - var(--lp, 0.5)) * 36px));
-}
-
-.research-pin[data-armed] .thread-ghost {
-  transform: translateX(calc((0.5 - var(--lp, 0.5)) * 90px));
-}
-
-.research-pin[data-armed] .thread-glyph * {
-  stroke-dasharray: 1;
-  stroke-dashoffset: calc(1 - clamp(0, calc(var(--lp, 1) * 2.6), 1));
-}
-
-.research-pin[data-armed] .thread-bar i {
-  transform: scaleX(var(--lp, 1));
 }
 
 /* Skip rendering work for below-the-fold sections until they are near the viewport. */
