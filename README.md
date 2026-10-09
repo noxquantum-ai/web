@@ -35,6 +35,28 @@ npm run preview
 Deploys on Vercel as a static site. `vercel.json` sets the build, clean URLs, security headers
 (including a strict CSP) and long-lived caching for `/assets`.
 
+## Search
+
+Built in (see `scripts/prerender.mjs`):
+
+- Every page has its own title, description, canonical URL, Open Graph and Twitter tags, and robots
+  directives that allow large image previews and full-length snippets.
+- Structured data (JSON-LD) per page: an Organization, a WebSite, a WebPage (or an Article with dates for
+  `/research`) and a breadcrumb trail. The entities share stable `@id`s, so they reference each other.
+- A sitemap with dates, and a robots.txt that points at it. Preview deployments publish no sitemap and are
+  disallowed in robots.txt, so search engines only see production.
+- Server-rendered content: every page's text and headings exist in the HTML itself, not after JavaScript.
+
+What only you can do, once the domain is live:
+
+1. Add the property `https://noxquantum.com` in [Google Search Console](https://search.google.com/search-console).
+   Copy the token from the "HTML tag" option and set it as the `GOOGLE_SITE_VERIFICATION` environment variable in
+   Vercel; the next build adds the verification tag. Then submit `https://noxquantum.com/sitemap.xml`.
+2. Use the URL Inspection tool on `/` and `/research` and press "Request indexing".
+3. Check the [Rich Results Test](https://search.google.com/test/rich-results) on `/research`.
+4. Decide on AI crawlers. robots.txt currently allows all crawlers, including AI training crawlers. To opt
+   out of model training while staying in search, add `User-agent: Google-Extended` with `Disallow: /`.
+
 ## Performance and scale
 
 The site is fully static: no server code, no database, no third-party requests. A first visit

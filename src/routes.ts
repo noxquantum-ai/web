@@ -4,6 +4,10 @@ export interface Route {
   file: string
   title?: string
   description?: string
+  /** Set for articles: the day it was first published (YYYY-MM-DD). */
+  published?: string
+  /** Shown in breadcrumbs and as the page's section, for article-style pages. */
+  section?: string
 }
 
 export const routes: Route[] = [
@@ -14,6 +18,8 @@ export const routes: Route[] = [
     title: 'Research — NoxQuantum',
     description:
       'How NoxQuantum works on compact models: tensor-structured compression, capability-preserving evaluation and low-compute inference, and how we compare methods.',
+    published: '2026-10-09',
+    section: 'Research',
   },
 ]
 
