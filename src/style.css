@@ -1461,17 +1461,39 @@ button:focus-visible {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
 }
 
-.thesis-statement {
+.thesis-claims {
+  list-style: none;
   margin: 0;
-  max-width: 26em;
+  padding: 0;
+  border-bottom: 1px solid var(--dark-line);
+}
+
+.thesis-claim {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 24px;
+  padding: 26px 0;
+  border-top: 1px solid var(--dark-line);
+}
+
+.thesis-index {
+  padding-top: 0.55em;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--dark-faint);
+}
+
+.thesis-claim p {
+  margin: 0;
+  max-width: 22em;
   font-weight: 500;
-  font-size: clamp(24px, 2.7vw, 40px);
-  line-height: 1.14;
-  letter-spacing: -0.04em;
+  font-size: clamp(26px, 3.7vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
 }
 
 .thesis-pin[data-armed] {
-  height: 260svh;
+  height: 320svh;
 }
 
 .thesis-pin[data-armed] .thesis-stage {
@@ -1487,13 +1509,27 @@ button:focus-visible {
   width: 100%;
 }
 
-.thesis-pin[data-armed] .w {
-  --k: clamp(0, calc((var(--p) - 0.04) / 0.76 * var(--n) - var(--i)), 1);
+.thesis-pin[data-armed] .thesis-claim {
+  --k: clamp(0, calc((var(--p) - 0.04 - var(--i) * 0.28) / 0.2), 1);
+}
+
+.thesis-pin[data-armed] .thesis-claim p {
   opacity: calc(0.4 + 0.6 * var(--k));
 }
 
 @media (max-width: 920px) {
   .thesis-stage {
     padding: 88px 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .thesis-claim {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 22px 0;
+  }
+  .thesis-index {
+    padding-top: 0;
   }
 }
