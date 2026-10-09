@@ -346,7 +346,7 @@ button:focus-visible {
   margin: 0 0 18px;
   font-size: 15px;
   font-weight: 500;
-  color: var(--faint);
+  color: var(--label, var(--faint));
 }
 
 .method-text .section-title {
@@ -844,15 +844,6 @@ button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
 }
 
-/* Eyebrow label */
-
-.eyebrow {
-  margin: 0 0 28px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--dark-faint);
-}
-
 @media (min-width: 921px) {
 }
 
@@ -862,6 +853,7 @@ button:focus-visible {
 /* Why Africa: pinned and dark; scroll fills the statement, then builds the ruler */
 
 .africa-pin {
+  --label: var(--dark-faint);
   position: relative;
   background: var(--africa-bg);
   color: #fff;
@@ -876,6 +868,10 @@ button:focus-visible {
   grid-template-columns: 7fr 5fr;
   gap: 72px;
   align-items: start;
+}
+
+.africa-main .kicker {
+  margin-bottom: 28px;
 }
 
 .africa-statement {

@@ -34,7 +34,7 @@ export function Company() {
       <div className="africa-stage">
         <div className="wrap africa-grid">
           <div className="africa-main">
-            <h2 className="eyebrow" id="africa-title">
+            <h2 className="kicker" id="africa-title">
               Why Africa
             </h2>
             <p className="africa-statement">
