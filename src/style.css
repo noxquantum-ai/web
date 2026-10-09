@@ -581,9 +581,14 @@ button:focus-visible {
   color: #fff;
 }
 
-.compare-flap {
+.compare-pending {
   display: block;
   margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 .track {

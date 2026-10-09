@@ -64,4 +64,3 @@ Cloudflare in front. This has not been load-tested against the live deployment.
   `public/robots.txt` and `public/sitemap.xml`.
 - Confirm `hello@noxquantum.com` receives mail.
 - `public/og-image.png` is the social preview (1200×630).
-- `src/components/reactbits/` holds components from [React Bits](https://reactbits.dev), used under its MIT + Commons Clause license (see `LICENSE.md` there).
