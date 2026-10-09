@@ -209,6 +209,11 @@ button:focus-visible {
     --select: var(--select-dark);
 }
 
+.method-card {
+  --focus: #fff;
+    --select: var(--select-dark);
+}
+
 /* Buttons */
 
 .btn {
@@ -346,6 +351,210 @@ button:focus-visible {
     color: var(--muted);
     margin: 0;
     max-width: 20em;
+}
+
+/* Method: a weight matrix becomes a chain of small tensors as you scroll */
+
+.method-pin {
+  position: relative;
+}
+
+.method-stage {
+  padding: 120px 0;
+}
+
+.method-grid {
+  display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: 72px;
+    align-items: center;
+}
+
+.kicker {
+  margin: 0 0 18px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--faint);
+}
+
+.method-text .section-title {
+  margin: 0 0 18px;
+}
+
+.method-caveat {
+  margin: 20px 0 28px;
+    font-size: 15.5px;
+    color: var(--muted);
+    max-width: 26em;
+}
+
+.text-link {
+  font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(19, 22, 19, 0.35);
+    padding-bottom: 2px;
+}
+
+.text-link:hover {
+  border-color: var(--ink);
+}
+
+.method-card {
+  margin: 0;
+    padding: 40px 40px 32px;
+    border-radius: 16px;
+    background: #0a0c0b;
+    color: #fff;
+}
+
+.tt {
+  display: block;
+    width: 100%;
+    height: auto;
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 1.5;
+}
+
+.tt-matrix line {
+  stroke: rgba(255, 255, 255, 0.14);
+}
+
+.tt-matrix .tt-frame {
+  stroke: rgba(255, 255, 255, 0.55);
+}
+
+.tt text {
+  stroke: none;
+    fill: #fff;
+    text-anchor: middle;
+    font-family: var(--font);
+}
+
+.tt-big {
+  font-size: 56px;
+    font-weight: 300;
+}
+
+.tt-eq {
+  font-size: 44px;
+    fill: var(--dark-faint);
+}
+
+.tt-g {
+  font-size: 16px;
+    font-weight: 600;
+}
+
+.tt-r {
+  font-size: 15px;
+    fill: var(--accent);
+    font-family: var(--mono);
+}
+
+.tt-node circle {
+  fill: #0a0c0b;
+    stroke: #fff;
+    stroke-width: 1.75;
+}
+
+.tt-node line {
+  stroke: rgba(255, 255, 255, 0.55);
+}
+
+.tt-bond line {
+  stroke: var(--accent);
+    stroke-width: 2;
+}
+
+.tt-matrix {
+  opacity: 0.3;
+}
+
+.method-stats {
+  margin: 28px 0 0;
+    padding-top: 22px;
+    border-top: 1px solid var(--dark-line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.method-stats dt {
+  font-size: 14px;
+    color: var(--dark-faint);
+    margin-bottom: 4px;
+}
+
+.method-stats dd {
+  margin: 0;
+    font-family: var(--mono);
+    font-size: clamp(20px, 2.2vw, 30px);
+    font-variant-numeric: tabular-nums;
+}
+
+.method-stat-b dd {
+  color: var(--accent);
+}
+
+.method-card figcaption {
+  margin-top: 18px;
+    font-size: 13px;
+    color: var(--dark-faint);
+}
+
+.method-pin[data-armed] {
+  height: 300svh;
+}
+
+.method-pin[data-armed] .method-stage {
+  position: sticky;
+    top: 0;
+    height: 100svh;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.method-pin[data-armed] .method-grid {
+  width: 100%;
+}
+
+.method-pin[data-armed] .tt-matrix {
+  opacity: calc(1 - 0.7 * clamp(0, calc((var(--p) - 0.12) / 0.3), 1));
+}
+
+.method-pin[data-armed] .tt-eq {
+  opacity: clamp(0, calc((var(--p) - 0.18) / 0.1), 1);
+}
+
+.method-pin[data-armed] .tt-node {
+  --k: clamp(0, calc((var(--p) - 0.16 - var(--n) * 0.05) / 0.22), 1);
+    opacity: var(--k);
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: translateX(calc((1 - var(--k)) * -240px)) scale(calc(0.55 + 0.45 * var(--k)));
+}
+
+.method-pin[data-armed] .tt-bond {
+  opacity: clamp(0, calc((var(--p) - 0.42) / 0.14), 1);
+}
+
+.method-pin[data-armed] .method-stat-b {
+  opacity: clamp(0, calc((var(--p) - 0.46) / 0.08), 1);
+}
+
+.method-pin[data-armed] .method-card figcaption {
+  opacity: clamp(0, calc((var(--p) - 0.46) / 0.08), 1);
+}
+
+.method-pin[data-armed] .method-caveat {
+  opacity: clamp(0, calc((var(--p) - 0.78) / 0.1), 1);
+}
+
+.method-pin[data-armed] .text-link {
+  opacity: clamp(0, calc((var(--p) - 0.78) / 0.1), 1);
 }
 
 /* CTA band */
@@ -908,12 +1117,30 @@ button:focus-visible {
         gap: 36px;
   }
 
+  .method-grid {
+    grid-template-columns: 1fr;
+        gap: 36px;
+  }
+
   .research-stage {
     padding: 88px 0;
   }
 
   .africa-stage {
     padding: 88px 0;
+  }
+
+  .method-stage {
+    padding: 88px 0;
+  }
+
+  .method-card {
+    padding: 24px 20px 20px;
+  }
+
+  .method-stats {
+    grid-template-columns: 1fr;
+        gap: 16px;
   }
 
   .thread-card.spotlight-card {
