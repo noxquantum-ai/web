@@ -35,9 +35,14 @@ section[id],
   scroll-margin-top: 24px;
 }
 
+/* Black behind the page, so overscroll at the top and bottom matches the hero and footer. */
+html {
+  background: var(--black);
+}
+
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--tint);
   color: var(--ink);
   font-family: var(--font);
   font-size: 17px;
@@ -305,10 +310,6 @@ button:focus-visible {
 
 .section {
   padding: 120px 0;
-}
-
-.section-tint {
-  background: var(--tint);
 }
 
 .section-title {
@@ -916,7 +917,7 @@ button:focus-visible {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--paper);
+  background: var(--tint);
   border: 2px solid var(--ink);
   transition:
     background 0.3s ease,

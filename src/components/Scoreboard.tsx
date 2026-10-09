@@ -16,7 +16,7 @@ const rows = [
 /** An empty scorecard. Nothing is measured yet, and the section says so. */
 export function Scoreboard() {
   return (
-    <section className="section section-tint" id="scoreboard" aria-labelledby="compare-title">
+    <section className="section" id="scoreboard" aria-labelledby="compare-title">
       <div className="wrap rail-grid">
         <div className="rail-head" data-reveal>
           <h2 className="section-title" id="compare-title">
