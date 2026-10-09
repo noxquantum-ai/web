@@ -720,22 +720,6 @@ button:focus-visible {
   margin: 0 0 32px;
 }
 
-/* Contact band: lines that turn toward the cursor */
-
-.cta-lines {
-  position: absolute;
-  top: 50%;
-  right: max(32px, calc((100vw - 1360px) / 2 + 32px));
-  width: min(40vw, 520px);
-  height: 74%;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.cta-band .wrap {
-  position: relative;
-}
-
 /* Footer */
 
 .site-footer {
@@ -824,9 +808,6 @@ button:focus-visible {
 @media (max-width: 920px) {
   .wrap {
     padding: 0 24px;
-  }
-  .cta-lines {
-    display: none;
   }
   .section {
     padding: 88px 0;
