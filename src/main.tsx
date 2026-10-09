@@ -1,3 +1,4 @@
+import '@fontsource-variable/manrope'
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App'
