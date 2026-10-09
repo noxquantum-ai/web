@@ -806,7 +806,8 @@ button:focus-visible {
 
 @media (max-width: 920px) {
   .wrap {
-    padding: 0 24px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
   .section {
     padding: 88px 0;
