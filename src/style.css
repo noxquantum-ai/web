@@ -557,6 +557,94 @@ button:focus-visible {
   opacity: clamp(0, calc((var(--p) - 0.78) / 0.1), 1);
 }
 
+/* Scoreboard */
+
+.plot {
+  margin: 0;
+}
+
+.plot svg {
+  max-width: 560px;
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--font);
+}
+
+.plot-grid line {
+  stroke: var(--line);
+}
+
+.plot-axis {
+  fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.5;
+}
+
+.plot-frontier {
+  fill: none;
+    stroke: var(--ink);
+    stroke-width: 2;
+    stroke-dasharray: 6 6;
+}
+
+.plot-label {
+  font-size: 15px;
+    fill: var(--muted);
+    font-weight: 500;
+}
+
+.plot figcaption {
+  margin-top: 12px;
+    font-size: 14px;
+    color: var(--faint);
+}
+
+.plot-nox {
+  font-size: 15px;
+    font-weight: 700;
+    fill: var(--ink);
+}
+
+.plot-slot circle {
+  fill: none;
+    stroke: var(--accent-ink);
+    stroke-width: 2;
+    stroke-dasharray: 4 4;
+}
+
+.plot-slot path {
+  stroke: var(--accent-ink);
+    stroke-width: 2;
+}
+
+.metrics {
+  list-style: none;
+    margin: 48px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.metrics li {
+  border-top: 2px solid var(--ink);
+    padding-top: 16px;
+}
+
+.metrics h3 {
+  font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+}
+
+.metrics p {
+  margin: 0;
+    font-size: 15.5px;
+    color: var(--muted);
+}
+
 /* CTA band */
 
 .cta-band {
@@ -686,6 +774,11 @@ button:focus-visible {
         align-items: center;
   }
 
+  .metrics {
+    grid-template-columns: 1fr;
+        gap: 24px;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -693,6 +786,14 @@ button:focus-visible {
 }
 
 @media (max-width: 560px) {
+  .plot-label {
+    font-size: 20px;
+  }
+
+  .plot-nox {
+    font-size: 22px;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr;
   }
@@ -701,6 +802,28 @@ button:focus-visible {
     padding: 88px 0;
   }
 
+}
+
+/* Flap board, source note */
+
+.flap-board {
+  margin-top: 28px;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.source {
+  font-size: 14px;
+}
+
+.source a {
+  color: var(--muted);
+    text-underline-offset: 3px;
+}
+
+.source a:hover {
+  color: var(--ink);
 }
 
 /* Eyebrow label */
