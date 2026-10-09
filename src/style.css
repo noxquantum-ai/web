@@ -1409,3 +1409,13 @@ button:focus-visible {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
 }
+
+/* Very narrow phones: the logo, a Contact button and Menu do not fit side by side. */
+@media (max-width: 420px) {
+  .header-cta {
+    display: none;
+  }
+  .menu-toggle {
+    margin-left: auto;
+  }
+}
