@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { useScrollScrub } from '../useScrollScrub'
 
 const NODES = [0, 1, 2, 3]
@@ -78,7 +79,7 @@ export function Method() {
                   </g>
                 ))}
                 {NODES.map((i) => (
-                  <g key={i} className="tt-node" style={{ '--n': i } as React.CSSProperties}>
+                  <g key={i} className="tt-node" style={{ '--n': i } as CSSProperties}>
                     <line x1={NODE_X(i)} x2={NODE_X(i)} y1={92} y2={114} />
                     <line x1={NODE_X(i)} x2={NODE_X(i)} y1={166} y2={188} />
                     <circle cx={NODE_X(i)} cy={140} r={26} />

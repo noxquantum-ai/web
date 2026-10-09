@@ -329,14 +329,14 @@ const SplitFlapText = ({
     '--split-flap-gap': toCssUnit(gap),
     '--split-flap-font-size': toCssUnit(fontSize),
     '--split-flap-flip-duration': `${Math.max(0.04, Number(flipDuration) || 0.12)}s`,
-    ...style,
+    ...(style as Record<string, string | number | undefined>),
   }
 
   return (
     <div
       className={`split-flap-text ${className}`.trim()}
       style={componentStyle}
-      role="text"
+      role={'text' as never}
       aria-label={settledText || undefined}
       {...props}
     >

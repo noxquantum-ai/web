@@ -331,7 +331,7 @@ const SpotlightCard = ({
           '--spotlight-card-surface': palette.surface,
           '--spotlight-card-border': palette.border,
           '--spotlight-card-shadow': palette.shadow,
-          ...style,
+          ...(style as React.CSSProperties),
         } as React.CSSProperties
       }
       {...rest}
