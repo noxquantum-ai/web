@@ -93,11 +93,6 @@ export function Company() {
                 field systems. That’s why Nox is starting in Africa, and why we plan to stay here as
                 we grow. Cheaper models would matter elsewhere too.
               </p>
-              <p>
-                AI models are where we’re starting. As the lab grows, we want to apply the same
-                standard to problems in other fields: measure honestly, and compare against the best
-                known methods.
-              </p>
             </div>
           </div>
         </div>
