@@ -25,7 +25,7 @@ if (sheet) {
 
 // Preload the Latin subset, which covers the whole page; other subsets load only if needed.
 const assets = await readdir(path.join(dist, 'assets'))
-const font = assets.find((f) => /^manrope-latin-wght-normal-.*\.woff2$/.test(f))
+const font = assets.find((f) => /^inter-latin-wght-normal-.*\.woff2$/.test(f))
 if (font) {
   const tag = `<link rel="preload" href="/assets/${font}" as="font" type="font/woff2" crossorigin />`
   html = html.replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n    ${tag}`)

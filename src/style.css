@@ -16,8 +16,7 @@
   --select: #c85a00;
   --select-dark: var(--accent);
   --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
-  --font:
-    'Manrope Variable', 'Manrope', 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 }
 
 * {
@@ -90,9 +89,9 @@ svg {
 }
 
 .wordmark {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 17px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   color: #fff;
   text-decoration: none;
   white-space: nowrap;
@@ -276,8 +275,8 @@ button:focus-visible {
 .hero h1 {
   font-weight: 500;
   font-size: clamp(34px, 4vw, 58px);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
   color: #fff;
   margin: 0 0 18px;
   max-width: 12em;
@@ -313,10 +312,10 @@ button:focus-visible {
 }
 
 .section-title {
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(26px, 2.9vw, 40px);
   line-height: 1.05;
-  letter-spacing: -0.028em;
+  letter-spacing: -0.04em;
   margin: 0 0 16px;
 }
 
@@ -595,8 +594,8 @@ button:focus-visible {
 
 .compare-name {
   font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 .compare-flap {
@@ -705,10 +704,10 @@ button:focus-visible {
 }
 
 .cta-band h2 {
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(24px, 2.7vw, 36px);
   line-height: 1.06;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.045em;
   max-width: 17em;
   margin: 0 0 20px;
   text-wrap: balance;
@@ -931,9 +930,9 @@ button:focus-visible {
 }
 
 .protocol h3 {
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(20px, 2vw, 26px);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1.15;
   margin: 0 0 10px;
   transition: color 0.4s ease;
@@ -1103,10 +1102,10 @@ button:focus-visible {
 }
 
 .panel-name {
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(20px, 2vw, 28px);
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
   max-width: 12em;
 }
 
@@ -1200,7 +1199,7 @@ button:focus-visible {
   font-weight: 500;
   font-size: clamp(26px, 3vw, 44px);
   line-height: 1.08;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.045em;
 }
 
 .africa-pin .source {
