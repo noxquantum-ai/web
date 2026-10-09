@@ -1453,3 +1453,11 @@ button:focus-visible {
 .research-pin[data-armed] .thread-bar i {
   transform: scaleX(var(--lp, 1));
 }
+
+/* Skip rendering work for below-the-fold sections until they are near the viewport. */
+#scoreboard,
+.cta-band,
+.site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
