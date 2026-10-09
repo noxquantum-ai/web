@@ -309,8 +309,6 @@ button:focus-visible {
 
 .section-tint {
   background: var(--tint);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
 }
 
 .section-title {
@@ -537,84 +535,168 @@ button:focus-visible {
   opacity: clamp(0, calc((var(--p) - 0.78) / 0.1), 1);
 }
 
-/* Scoreboard */
+/* Comparison scorecard */
 
-.plot {
-  margin: 0;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.plot svg {
-  max-width: 560px;
-  display: block;
+.compare {
   width: 100%;
-  height: auto;
-  font-family: var(--font);
+  border-collapse: collapse;
+  text-align: left;
 }
 
-.plot-grid line {
-  stroke: var(--line);
-}
-.plot-axis {
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 1.5;
-}
-.plot-frontier {
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 2;
-  stroke-dasharray: 6 6;
-}
-.plot-label {
+.compare thead th {
+  padding: 0 20px 18px;
   font-size: 15px;
-  fill: var(--muted);
-  font-weight: 500;
+  font-weight: 600;
+  vertical-align: bottom;
 }
-.plot figcaption {
-  margin-top: 12px;
-  font-size: 14px;
+
+.compare thead th:first-child {
+  padding-left: 0;
+}
+
+.compare small {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
   color: var(--faint);
 }
 
-.plot-nox {
-  font-size: 15px;
-  font-weight: 700;
-  fill: var(--ink);
-}
-.plot-slot circle {
-  fill: none;
-  stroke: var(--accent-ink);
-  stroke-width: 2;
-  stroke-dasharray: 4 4;
-}
-.plot-slot path {
-  stroke: var(--accent-ink);
-  stroke-width: 2;
+.compare tbody tr + tr th,
+.compare tbody tr + tr td {
+  border-top: 1px solid var(--line);
 }
 
-.metrics {
-  list-style: none;
-  margin: 48px 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+.compare tbody th,
+.compare tbody td {
+  padding: 22px 20px;
+  vertical-align: middle;
 }
 
-.metrics li {
-  border-top: 2px solid var(--ink);
-  padding-top: 16px;
+.compare tbody th {
+  padding-left: 0;
+  font-weight: 400;
 }
-.metrics h3 {
+
+.compare-name {
   font-size: 18px;
   font-weight: 600;
-  margin: 0 0 8px;
   letter-spacing: -0.01em;
 }
-.metrics p {
-  margin: 0;
-  font-size: 15.5px;
-  color: var(--muted);
+
+.compare-flap {
+  display: block;
+  margin-top: 10px;
+}
+
+.track {
+  display: block;
+  height: 8px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(135deg, var(--line) 0 5px, transparent 5px 10px);
+}
+
+.compare .is-ours th,
+.compare .is-ours td {
+  background: var(--paper);
+  border-top-color: transparent;
+}
+
+.compare .is-ours th {
+  padding-left: 20px;
+  border-radius: 12px 0 0 12px;
+}
+.compare .is-ours td:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+.compare .is-ours .compare-name {
+  color: var(--accent-ink);
+}
+
+.compare .is-ours .track {
+  background: none;
+  border: 1.5px dashed var(--accent-ink);
+}
+
+.compare-note {
+  margin: 24px 0 0;
+  font-size: 14px;
+  color: var(--faint);
+  max-width: 40em;
+}
+
+@media (max-width: 760px) {
+  .compare,
+  .compare tbody,
+  .compare tr,
+  .compare th,
+  .compare td {
+    display: block;
+  }
+
+  .compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .compare tbody tr {
+    margin-bottom: 12px;
+    padding: 20px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+
+  .compare tbody tr + tr th,
+  .compare tbody tr + tr td {
+    border-top: 0;
+  }
+
+  .compare tbody th,
+  .compare .is-ours th {
+    padding: 0 0 14px;
+    border-radius: 0;
+    background: none;
+  }
+
+  .compare tbody td,
+  .compare .is-ours td {
+    padding: 10px 0 0;
+    background: none;
+    border-radius: 0;
+  }
+
+  .compare td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .compare .is-ours {
+    border-color: var(--accent-ink);
+  }
 }
 
 /* CTA band */
@@ -899,14 +981,7 @@ button:focus-visible {
   background: var(--accent-ink);
 }
 
-/* Flap board, source note */
-
-.flap-board {
-  margin-top: 28px;
-  display: inline-block;
-  max-width: 100%;
-  overflow: hidden;
-}
+/* Source note */
 
 .source {
   font-size: 14px;
