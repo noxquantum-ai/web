@@ -632,13 +632,6 @@ button:focus-visible {
   border: 1.5px dashed var(--accent-ink);
 }
 
-.compare-note {
-  margin: 24px 0 0;
-  font-size: 14px;
-  color: var(--faint);
-  max-width: 40em;
-}
-
 @media (max-width: 760px) {
   .compare,
   .compare tbody,
