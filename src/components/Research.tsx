@@ -72,13 +72,7 @@ export function Research() {
   }, [])
 
   return (
-    <section
-      className="research-pin"
-      id="research"
-      ref={ref}
-      data-overlap
-      aria-labelledby="research-title"
-    >
+    <section className="research-pin" id="research" ref={ref} aria-labelledby="research-title">
       {threads.map((t, i) => (
         <span
           key={t.id}
