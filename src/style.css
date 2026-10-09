@@ -864,7 +864,7 @@ button:focus-visible {
 
 .africa-pin {
   position: relative;
-  background: var(--black);
+  background: var(--africa-bg);
   color: #fff;
 }
 
@@ -949,7 +949,7 @@ button:focus-visible {
   margin: 0;
   font-size: 15px;
   color: var(--dark-muted);
-  background: var(--black);
+  background: var(--africa-bg);
 }
 
 .africa-row strong {
@@ -1081,34 +1081,30 @@ button:focus-visible {
 /* Sheets: each section is a rounded sheet that slides over the one before it. */
 
 :root {
-  --tint-2: #eceae2;
+  --africa-bg: #0a0a0a;
   --sheet-radius: 28px;
 }
 
-#method,
-#scoreboard,
-#approach {
+#company,
+#method {
   position: relative;
   margin-top: calc(var(--sheet-radius) * -1);
   border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
 }
 
-#method,
-#approach {
+#method {
   background: var(--tint);
-}
-
-#scoreboard {
-  background: var(--tint-2);
-}
-
-#method,
-#scoreboard,
-#approach {
   box-shadow: 0 -16px 40px -14px rgba(0, 0, 0, 0.12);
 }
 
+/* A hair of light along the curved top edge, so near-black on near-black still reads as two layers. */
+#company {
+  background: var(--africa-bg);
+  box-shadow: inset 0 1px 0 #232323;
+}
+
 /* The pinned stage shrinks and dims as the next sheet slides over it. */
+.thesis-pin[data-armed] .thesis-stage,
 .africa-pin[data-armed] .africa-stage {
   transform-origin: 50% 40%;
   transform: scale(calc(1 - 0.07 * var(--c, 0)));
@@ -1148,7 +1144,8 @@ button:focus-visible {
 }
 
 .thesis-pin[data-armed] {
-  height: 260svh;
+  height: 360svh;
+  margin-bottom: -100svh;
 }
 
 .thesis-pin[data-armed] .thesis-stage {

@@ -14,6 +14,7 @@ export function Thesis() {
       className="thesis-pin"
       id="thesis"
       ref={ref}
+      data-overlap
       style={{ '--n': WORDS.length } as CSSProperties}
       aria-labelledby="thesis-title"
     >
