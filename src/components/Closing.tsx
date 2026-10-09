@@ -1,23 +1,9 @@
 import Logomark from './Logomark'
 
-export function ContactBand() {
-  return (
-    <section className="cta-band" id="contact">
-      <div className="wrap" data-reveal>
-        <h2>Work on compression, tensor methods, or research capacity in Africa?</h2>
-        <p>We don’t have a product or an API. If you write to us, a researcher will reply.</p>
-        <a className="btn btn-light" href="mailto:hello@noxquantum.com">
-          hello@noxquantum.com
-        </a>
-      </div>
-    </section>
-  )
-}
-
 export function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" id="contact">
       <div className="wrap footer-grid">
         <div className="footer-brand">
           <p className="wordmark">
@@ -49,6 +35,7 @@ export function Footer() {
           No cookies, no analytics. <a href="/privacy">Privacy</a>
         </p>
       </div>
+      <div className="footer-giant" aria-hidden="true" />
     </footer>
   )
 }

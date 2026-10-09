@@ -198,7 +198,6 @@ button:focus-visible {
 .hero,
 .africa-pin,
 .method-card,
-.cta-band,
 .site-footer {
   --focus: #fff;
   --select: var(--select-dark);
@@ -693,32 +692,6 @@ button:focus-visible {
   }
 }
 
-/* CTA band */
-
-.cta-band {
-  position: relative;
-  overflow: hidden;
-  background: var(--black);
-  color: #fff;
-  padding: 96px 0;
-}
-
-.cta-band h2 {
-  font-weight: 500;
-  font-size: clamp(24px, 2.7vw, 36px);
-  line-height: 1.06;
-  letter-spacing: -0.045em;
-  max-width: 17em;
-  margin: 0 0 20px;
-  text-wrap: balance;
-}
-
-.cta-band p {
-  color: var(--dark-muted);
-  font-size: 16px;
-  margin: 0 0 32px;
-}
-
 /* Footer */
 
 .site-footer {
@@ -802,6 +775,40 @@ button:focus-visible {
   color: #fff;
 }
 
+/* The name at full width, ghosted and cropped by the bottom edge of the page. */
+
+.site-footer {
+  container-type: inline-size;
+}
+
+.footer-giant {
+  --edge: 36px;
+  --fit: 5.75; /* width of the word in ems, so it spans the page edge to edge */
+  overflow: hidden;
+  padding: 8px var(--edge) 0;
+  height: calc(var(--size) * 0.78);
+  user-select: none;
+  pointer-events: none;
+  --size: calc((100vw - var(--edge) * 2) / var(--fit));
+}
+
+@supports (width: 1cqw) {
+  .footer-giant {
+    --size: calc((100cqw - var(--edge) * 2) / var(--fit));
+  }
+}
+
+.footer-giant::before {
+  content: 'NoxQuantum';
+  display: block;
+  font-weight: 600;
+  font-size: var(--size);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  color: #141414;
+}
+
 /* Responsive */
 
 @media (max-width: 920px) {
@@ -847,9 +854,6 @@ button:focus-visible {
   }
   .footer-grid {
     grid-template-columns: 1fr;
-  }
-  .cta-band {
-    padding: 88px 0;
   }
 }
 
@@ -1380,8 +1384,7 @@ button:focus-visible {
   }
 }
 
-/* Skip rendering work for the contact band and footer until they are near the viewport. */
-.cta-band,
+/* Skip rendering work for the footer until they are near the viewport. */
 .site-footer {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
@@ -1439,4 +1442,8 @@ button:focus-visible {
   transform-origin: 50% 40%;
   transform: scale(calc(1 - 0.07 * var(--c, 0)));
   opacity: calc(1 - 0.6 * var(--c, 0));
+}
+
+#contact.site-footer {
+  border-top: 0;
 }

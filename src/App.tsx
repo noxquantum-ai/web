@@ -1,4 +1,4 @@
-import { ContactBand, Footer } from './components/Closing'
+import { Footer } from './components/Closing'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import { Method } from './components/Method'
@@ -35,7 +35,6 @@ export default function App() {
         <Method />
         <Scoreboard />
         <Approach />
-        <ContactBand />
       </main>
       <Footer />
     </>
