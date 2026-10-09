@@ -1,10 +1,6 @@
 // Monochrome canvas visuals. No color, no glow, no particles:
 // architectural metal and macro-circuitry rendered in black and white.
 
-const REDUCED =
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 function fit(canvas: HTMLCanvasElement): { ctx: CanvasRenderingContext2D; w: number; h: number } | null {
   const ctx = canvas.getContext('2d');
   if (!ctx) return null;
@@ -18,11 +14,16 @@ function fit(canvas: HTMLCanvasElement): { ctx: CanvasRenderingContext2D; w: num
   return { ctx, w, h };
 }
 
-/** Static chip-floorplan drawing for the hero: precise, flat, monochrome. */
+/**
+ * Chip-floorplan drawing for the hero: precise, flat, monochrome. At rest it is a
+ * still image; when the pointer is near, individual bus lines bend away from it.
+ */
 export function paintField(canvas: HTMLCanvasElement): () => void {
-  const fitted = fit(canvas);
+  let fitted = fit(canvas);
   if (!fitted) return () => {};
-  const { ctx, w, h } = fitted;
+  const ctx = fitted.ctx;
+  let w = fitted.w;
+  let h = fitted.h;
 
   // Deterministic pseudo-random so the composition reads as designed.
   function mulberry32(seed: number): () => number {
@@ -36,8 +37,41 @@ export function paintField(canvas: HTMLCanvasElement): () => void {
     };
   }
 
-  function paint(): void {
+  interface Bus { x0: number; y0: number; x1: number; y1: number; x2: number; bright: boolean; o0: number; o1: number; oj: number }
+  interface Rail { x: number; y0: number; y1: number; o: number }
+  let buses: Bus[] = [];
+  let rails: Rail[] = [];
+  let pads: { x: number; y: number; hot: boolean }[] = [];
+
+  // Same random sequence, in the same order, as the original static drawing.
+  function layout(): void {
     const rand = mulberry32(20261009);
+    buses = [];
+    for (let i = 0; i < 64; i++) {
+      const y0 = rand() * h;
+      const x0 = w * (0.5 + rand() * 0.12);
+      const x1 = w * (0.62 + rand() * 0.2);
+      const y1 = y0 + (rand() - 0.5) * h * 0.22;
+      const x2 = w * (0.86 + rand() * 0.14);
+      const bright = rand() > 0.86;
+      buses.push({ x0, y0, x1, y1, x2, bright, o0: 0, o1: 0, oj: 0 });
+    }
+    rails = [];
+    for (let i = 0; i < 26; i++) {
+      const x = w * (0.55 + rand() * 0.44);
+      const y0 = rand() * h * 0.4;
+      const len = h * (0.2 + rand() * 0.5);
+      rails.push({ x, y0, y1: y0 + len, o: 0 });
+    }
+    pads = [];
+    for (let i = 0; i < 30; i++) {
+      const x = w * (0.55 + rand() * 0.43);
+      const y = rand() * h;
+      pads.push({ x, y, hot: rand() > 0.8 });
+    }
+  }
+
+  function paint(): void {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, w, h);
     ctx.lineWidth = 1;
@@ -63,48 +97,39 @@ export function paintField(canvas: HTMLCanvasElement): () => void {
     }
 
     // Bus lines with right-angle jogs running between blocks.
-    for (let i = 0; i < 64; i++) {
-      const y0 = rand() * h;
-      const x0 = w * (0.5 + rand() * 0.12);
-      const x1 = w * (0.62 + rand() * 0.2);
-      const y1 = y0 + (rand() - 0.5) * h * 0.22;
-      const x2 = w * (0.86 + rand() * 0.14);
-      const bright = rand() > 0.86;
-      ctx.strokeStyle = bright ? 'rgba(255,255,255,0.34)' : 'rgba(255,255,255,0.10)';
+    for (const b of buses) {
+      const ya = b.y0 + b.o0;
+      const yb = b.y1 + b.o1;
+      const xj = b.x1 + b.oj;
+      ctx.strokeStyle = b.bright ? 'rgba(255,255,255,0.34)' : 'rgba(255,255,255,0.10)';
       ctx.beginPath();
-      ctx.moveTo(x0, y0);
-      ctx.lineTo(x1, y0);
-      ctx.lineTo(x1, y1);
-      ctx.lineTo(x2, y1);
+      ctx.moveTo(b.x0, ya);
+      ctx.lineTo(xj, ya);
+      ctx.lineTo(xj, yb);
+      ctx.lineTo(b.x2, yb);
       ctx.stroke();
-      if (bright) {
+      if (b.bright) {
         ctx.fillStyle = 'rgba(255,255,255,0.6)';
-        ctx.fillRect(x2 - 2, y1 - 2, 4, 4);
+        ctx.fillRect(b.x2 - 2, yb - 2, 4, 4);
       }
     }
 
     // Vertical buses tying top to bottom.
-    for (let i = 0; i < 26; i++) {
-      const x0 = w * (0.55 + rand() * 0.44);
-      const y0 = rand() * h * 0.4;
-      const len = h * (0.2 + rand() * 0.5);
+    for (const r of rails) {
       ctx.strokeStyle = 'rgba(255,255,255,0.08)';
       ctx.beginPath();
-      ctx.moveTo(x0, y0);
-      ctx.lineTo(x0, y0 + len);
+      ctx.moveTo(r.x + r.o, r.y0);
+      ctx.lineTo(r.x + r.o, r.y1);
       ctx.stroke();
     }
 
     // Pads at scattered terminals.
-    for (let i = 0; i < 30; i++) {
-      const px = w * (0.55 + rand() * 0.43);
-      const py = rand() * h;
-      const hot = rand() > 0.8;
-      ctx.fillStyle = hot ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.20)';
-      ctx.fillRect(px - 1.5, py - 1.5, 3, 3);
-      if (hot) {
+    for (const p of pads) {
+      ctx.fillStyle = p.hot ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.20)';
+      ctx.fillRect(p.x - 1.5, p.y - 1.5, 3, 3);
+      if (p.hot) {
         ctx.strokeStyle = 'rgba(255,255,255,0.25)';
-        ctx.strokeRect(px - 5.5, py - 5.5, 11, 11);
+        ctx.strokeRect(p.x - 5.5, p.y - 5.5, 11, 11);
       }
     }
 
@@ -131,100 +156,89 @@ export function paintField(canvas: HTMLCanvasElement): () => void {
     ctx.fillRect(0, h * 0.55, w, h * 0.45);
   }
 
+  layout();
   paint();
+
+  // --- Pointer interaction: lines near the cursor part around it, each on its own spring. ---
+  const REACH = 190; // px of influence
+  const PUSH = 30; // max px a line moves
+  const cursor = { x: 0, y: 0, on: false };
+  let raf = 0;
+
+  // Distance from a point to a horizontal / vertical segment.
+  const distH = (xa: number, xb: number, y: number) =>
+    Math.hypot(Math.max(Math.min(xa, xb) - cursor.x, 0, cursor.x - Math.max(xa, xb)), y - cursor.y);
+  const distV = (x: number, ya: number, yb: number) =>
+    Math.hypot(x - cursor.x, Math.max(Math.min(ya, yb) - cursor.y, 0, cursor.y - Math.max(ya, yb)));
+  // Signed push away from the cursor, fading smoothly with distance.
+  const push = (coord: number, from: number, dist: number) =>
+    cursor.on ? Math.sign(coord - from || 1) * PUSH * Math.exp(-((dist / REACH) ** 2)) : 0;
+
+  function step(): void {
+    raf = 0;
+    let moving = false;
+    const ease = (cur: number, to: number, k: number) => {
+      const next = cur + (to - cur) * k;
+      if (Math.abs(next - to) > 0.05) moving = true;
+      return Math.abs(next - to) > 0.05 ? next : to;
+    };
+    buses.forEach((b, i) => {
+      const k = 0.07 + (i % 5) * 0.025; // each line settles at its own pace
+      b.o0 = ease(b.o0, push(b.y0, cursor.y, distH(b.x0, b.x1, b.y0)), k);
+      b.o1 = ease(b.o1, push(b.y1, cursor.y, distH(b.x1, b.x2, b.y1)), k);
+      b.oj = ease(b.oj, push(b.x1, cursor.x, distV(b.x1, b.y0, b.y1)), k);
+    });
+    rails.forEach((r, i) => {
+      r.o = ease(r.o, push(r.x, cursor.x, distV(r.x, r.y0, r.y1)), 0.06 + (i % 4) * 0.025);
+    });
+    paint();
+    if (moving) raf = requestAnimationFrame(step);
+  }
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const last = { x: 0, y: 0 };
+  const aim = () => {
+    const rect = canvas.getBoundingClientRect();
+    cursor.x = last.x - rect.left;
+    cursor.y = last.y - rect.top;
+    cursor.on = cursor.x >= 0 && cursor.x <= rect.width && cursor.y >= 0 && cursor.y <= rect.height;
+    if (!raf) raf = requestAnimationFrame(step);
+  };
+  const onMove = (e: PointerEvent) => {
+    if (e.pointerType === 'touch') return;
+    last.x = e.clientX;
+    last.y = e.clientY;
+    aim();
+  };
+  const onLeave = () => {
+    cursor.on = false;
+    if (!raf) raf = requestAnimationFrame(step);
+  };
+  if (!reduced) {
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('scroll', aim, { passive: true });
+    document.documentElement.addEventListener('pointerleave', onLeave);
+  }
 
   let resizeTimer = 0;
   const onResize = () => {
     window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(paint, 200);
+    resizeTimer = window.setTimeout(() => {
+      fitted = fit(canvas);
+      if (!fitted) return;
+      w = fitted.w;
+      h = fitted.h;
+      layout();
+      paint();
+    }, 200);
   };
   window.addEventListener('resize', onResize);
-  return () => window.removeEventListener('resize', onResize);
-}
-
-/** Macro circuitry for the wide media card. */
-export function paintMacro(canvas: HTMLCanvasElement): () => void {
-  const fitted = fit(canvas);
-  if (!fitted) return () => {};
-  const { ctx, w, h } = fitted;
-
-  let raf = 0;
-  const t0 = performance.now();
-
-  // Fixed trace layout so it reads as designed, not random.
-  const traces = Array.from({ length: 26 }, (_, i) => {
-    const y = (h / 26) * i + h / 52;
-    const x0 = ((i * 197) % 60) * (w / 60);
-    const x1 = x0 + w * (0.25 + ((i * 89) % 40) / 100);
-    const x2 = x1 + w * 0.08;
-    const y2 = y + (((i * 53) % 3) - 1) * h * 0.09;
-    return { y, x0, x1, x2, y2, bright: i % 7 === 0 };
-  });
-  const pads = Array.from({ length: 14 }, (_, i) => ({
-    x: ((i * 331) % 100) * (w / 100),
-    y: ((i * 167) % 100) * (h / 100),
-    r: 2 + ((i * 41) % 5),
-  }));
-
-  function frame(now: number): void {
-    const t = (now - t0) / 1000;
-    ctx.fillStyle = '#0a0c0b';
-    ctx.fillRect(0, 0, w, h);
-
-    // Soft defocused discs for depth.
-    for (let i = 0; i < 7; i++) {
-      const cx = ((i * 389) % 100) * (w / 100);
-      const cy = ((i * 241) % 100) * (h / 100);
-      const r = 60 + ((i * 97) % 120);
-      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      g.addColorStop(0, 'rgba(255,255,255,0.055)');
-      g.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // PCB traces with right-angle bends.
-    ctx.lineWidth = 1.2;
-    for (const tr of traces) {
-      ctx.strokeStyle = tr.bright ? 'rgba(255,255,255,0.38)' : 'rgba(255,255,255,0.14)';
-      ctx.beginPath();
-      ctx.moveTo(tr.x0, tr.y);
-      ctx.lineTo(tr.x1, tr.y);
-      ctx.lineTo(tr.x2, tr.y2);
-      ctx.lineTo(tr.x2 + w * 0.2, tr.y2);
-      ctx.stroke();
-      ctx.fillStyle = tr.bright ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.18)';
-      ctx.beginPath();
-      ctx.arc(tr.x0, tr.y, 2, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // Pads, one of them pulsing gently.
-    pads.forEach((p, i) => {
-      const pulse = i === 3 && !REDUCED ? 0.5 + 0.3 * Math.sin(t * 1.4) : 0.4;
-      ctx.fillStyle = `rgba(255,255,255,${pulse})`;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255,255,255,0.16)';
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r + 5, 0, Math.PI * 2);
-      ctx.stroke();
-    });
-
-    // Bottom shade for the overlaid label.
-    const bottom = ctx.createLinearGradient(0, h * 0.5, 0, h);
-    bottom.addColorStop(0, 'rgba(0,0,0,0)');
-    bottom.addColorStop(1, 'rgba(0,0,0,0.66)');
-    ctx.fillStyle = bottom;
-    ctx.fillRect(0, h * 0.5, w, h * 0.5);
-
-    if (!REDUCED) raf = requestAnimationFrame(frame);
-  }
-
-  if (REDUCED) frame(t0);
-  else raf = requestAnimationFrame(frame);
-  return () => cancelAnimationFrame(raf);
+  return () => {
+    window.clearTimeout(resizeTimer);
+    cancelAnimationFrame(raf);
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('pointermove', onMove);
+    window.removeEventListener('scroll', aim);
+    document.documentElement.removeEventListener('pointerleave', onLeave);
+  };
 }

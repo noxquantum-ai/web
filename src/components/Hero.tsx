@@ -18,7 +18,7 @@ export default function Hero() {
         </h1>
         <p className="hero-sub">
           NoxQuantum is a research company built from Africa, developing quantum
-          and quantum-inspired algorithms for hard computational problems —
+          and quantum-inspired algorithms for hard computational problems,
           starting with compact AI models.
         </p>
         <a className="btn btn-light" href="#approach">
