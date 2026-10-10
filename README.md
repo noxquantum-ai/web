@@ -89,4 +89,5 @@ Cloudflare in front. This has not been load-tested against the live deployment.
   behind a login, so crawlers cannot preview them; share the production domain. Previews are cached, so a new
   link (or the Facebook Sharing Debugger) is needed to refresh one.
 - Confirm `hello@noxquantum.com` receives mail.
+- `public/logo.png` is the master brand mark (512×512).
 - `public/og-image.png` is the social preview (1200×630).
