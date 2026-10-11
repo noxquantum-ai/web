@@ -102,8 +102,6 @@ svg {
 
 .logomark {
   flex: none;
-  display: block;
-  object-fit: contain;
 }
 
 .skip-link {
