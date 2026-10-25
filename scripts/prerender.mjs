@@ -58,7 +58,7 @@ function structuredData(route) {
     image: `${SITE}/og-image.png`,
     email: 'hello@noxquantum.com',
     description:
-      'NoxQuantum develops computationally efficient AI through model compression, faster inference and better LLM architectures.',
+      'NoxQuantum develops model compression research for AI product teams, hosting providers and private deployments.',
     knowsAbout: [
       'Computationally efficient AI',
       'LLM architectures',
@@ -78,14 +78,14 @@ function structuredData(route) {
     '@id': `${SITE}/#website`,
     url: `${SITE}/`,
     name: 'NoxQuantum',
-    description: 'Computationally efficient AI, built from Africa.',
+    description: 'Model compression research for AI products, infrastructure and private deployments.',
     inLanguage: 'en',
     publisher: { '@id': `${SITE}/#organization` },
   }
-  const title = route.title || 'NoxQuantum — Computationally efficient AI'
+  const title = route.title || 'NoxQuantum — Model compression for AI deployment'
   const description =
     route.description ||
-    'Smaller models, faster inference and better LLM architectures. Built from Africa.'
+    'NEC shrinks a complete Llama-2-7B package 5.485×. NoxQuantum is exploring smaller model packages for AI products, hosting platforms and private deployments.'
   const page = {
     '@type': route.published ? 'Article' : 'WebPage',
     '@id': `${url}#page`,
