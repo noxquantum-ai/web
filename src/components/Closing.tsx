@@ -10,7 +10,7 @@ export function Footer() {
             <Logomark />
             NoxQuantum
           </p>
-          <p>Quantum-inspired algorithms for hard problems. Built from Africa.</p>
+          <p>Computationally efficient AI. Built from Africa.</p>
           <a className="footer-mail" href="mailto:hello@noxquantum.com">
             hello@noxquantum.com
           </a>
@@ -24,8 +24,7 @@ export function Footer() {
         <nav aria-label="Company">
           <p>Company</p>
           <a href="/#company">Why Africa</a>
-          <a href="/research#approach">Approach</a>
-          <a href="/research#compare">How we compare</a>
+          <a href="/blog">Blog</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>

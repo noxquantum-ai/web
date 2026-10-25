@@ -272,10 +272,10 @@ button:focus-visible {
 }
 
 .hero h1 {
-  font-weight: 500;
-  font-size: clamp(34px, 4vw, 58px);
-  line-height: 0.96;
-  letter-spacing: -0.055em;
+  font-weight: 450;
+  font-size: clamp(36px, 4.2vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
   color: #fff;
   margin: 0 0 18px;
   max-width: 12em;
@@ -283,8 +283,8 @@ button:focus-visible {
 }
 
 .hero-sub {
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--dark-muted);
   max-width: 32em;
   margin: 0 0 22px;
@@ -311,7 +311,7 @@ button:focus-visible {
 }
 
 .section-title {
-  font-weight: 500;
+  font-weight: 450;
   font-size: clamp(26px, 2.9vw, 40px);
   line-height: 1.05;
   letter-spacing: -0.04em;
@@ -933,13 +933,13 @@ button:focus-visible {
 
 .africa-bar {
   height: 14px;
-  width: 58.333%;
+  width: var(--model-original);
   margin-bottom: 8px;
   background: #fff;
 }
 
 .africa-bar-goal {
-  width: 5.833%;
+  width: var(--model-nec);
   background: transparent;
   border: 2px solid var(--accent);
 }
@@ -1004,15 +1004,21 @@ button:focus-visible {
 }
 
 :is(.africa-pin[data-armed], .africa-pin[data-flow]) .africa-bar {
-  width: calc(58.333% * clamp(0, calc((var(--p) - 0.4) / 0.18), 1));
+  width: calc(var(--model-original) * clamp(0, calc((var(--p) - 0.4) / 0.18), 1));
 }
 
 .africa-pin[data-armed] .africa-bar-goal {
-  width: calc(58.333% - 52.5% * clamp(0, calc((var(--p) - 0.66) / 0.2), 1));
+  width: calc(
+    var(--model-original) - (var(--model-original) - var(--model-nec)) *
+      clamp(0, calc((var(--p) - 0.66) / 0.2), 1)
+  );
 }
 
 .africa-pin[data-flow] .africa-bar-goal {
-  width: calc(58.333% - 52.5% * clamp(0, calc((var(--p) - 0.5) / 0.18), 1));
+  width: calc(
+    var(--model-original) - (var(--model-original) - var(--model-nec)) *
+      clamp(0, calc((var(--p) - 0.5) / 0.18), 1)
+  );
 }
 
 :is(.africa-pin[data-armed], .africa-pin[data-flow]) .africa-row-a p {
@@ -1132,7 +1138,7 @@ button:focus-visible {
 .thesis-statement {
   margin: 0;
   max-width: 21em;
-  font-weight: 500;
+  font-weight: 450;
   font-size: clamp(28px, 4vw, 60px);
   line-height: 1.08;
   letter-spacing: -0.045em;
@@ -1298,5 +1304,266 @@ main:focus {
   .post-body p,
   .post-steps li {
     font-size: 17px;
+  }
+}
+
+/* Research and blog typography. The existing site palette and homepage layout are retained. */
+@font-face {
+  font-family: 'Nox Research Serif';
+  src: url('/fonts/latin-modern-roman.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.post-head,
+.post-body {
+  width: min(768px, calc(100% - 48px));
+}
+
+.post-head {
+  text-align: left;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--dark-line);
+  margin-bottom: 42px;
+}
+
+.post-title {
+  font-family: 'Nox Research Serif', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(29px, 2.5vw, 34px);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  margin: 0 0 18px;
+  text-wrap: pretty;
+}
+
+.post-meta {
+  justify-content: flex-start;
+  font-size: 13px;
+  color: var(--dark-muted);
+}
+
+.post-dek {
+  margin: 0;
+  max-width: none;
+  font-size: 16px;
+}
+
+.post-body p {
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.post-section h2,
+.blog-entry h2 {
+  font-family: 'Nox Research Serif', Georgia, serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.post-body .post-note,
+.post-source {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--dark-muted);
+  margin-top: 20px;
+}
+
+.post-results td {
+  font-variant-numeric: tabular-nums;
+  font-size: 16px;
+  color: var(--dark-muted);
+}
+
+.post-results .is-ours td {
+  color: #fff;
+}
+
+.post-figure {
+  margin: 30px 0;
+}
+
+.post-figure figcaption {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--dark-muted);
+}
+
+.post-figure figcaption a {
+  margin-left: 8px;
+}
+
+.post-detail {
+  margin: 25px 0;
+  padding-block: 12px;
+  border-block: 1px solid var(--dark-line);
+}
+
+.post-detail summary {
+  padding-block: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--dark-muted);
+}
+
+.blog-index {
+  min-height: 70svh;
+}
+
+.blog-entry {
+  padding-block: 5px 36px;
+  border-bottom: 1px solid var(--dark-line);
+}
+
+.blog-entry time {
+  color: var(--dark-muted);
+  font-size: 13px;
+}
+
+.blog-entry h2 {
+  margin: 16px 0;
+}
+
+.blog-entry h2 a {
+  text-decoration: none;
+}
+
+.blog-entry h2 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+@media (max-width: 560px) {
+  .post-body p {
+    font-size: 16px;
+  }
+  .post-section h2,
+  .blog-entry h2 {
+    font-size: 27px;
+  }
+  .post-body .post-note {
+    font-size: 13px;
+  }
+}
+
+.post-term {
+  white-space: nowrap;
+}
+
+/* Native research plots inherit the article's black, white and gold palette. */
+.native-plot {
+  padding-block: 25px 22px;
+  border-block: 1px solid var(--dark-line);
+}
+
+.native-plot-heading {
+  margin-bottom: 26px;
+  font-family: 'Nox Research Serif', Georgia, serif;
+  font-size: 25px;
+  line-height: 1.25;
+  color: #fff;
+}
+
+.native-bar-row + .native-bar-row {
+  margin-top: 24px;
+}
+
+.native-bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--dark-muted);
+}
+
+.native-bar-label strong {
+  flex-shrink: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.native-bar-track {
+  height: 22px;
+  background: #161916;
+}
+
+.native-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--dark-muted);
+  transform-origin: left center;
+}
+
+.native-bar-fill.is-accent {
+  background: var(--accent);
+}
+
+.post-body .native-plot-note {
+  margin: 18px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--dark-muted);
+}
+
+.native-cache-plot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.native-grid-line {
+  stroke: var(--dark-line);
+  stroke-width: 1;
+}
+
+.native-cache-line {
+  stroke: var(--accent);
+}
+
+.native-accuracy-range {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
+.native-cache-dot {
+  fill: var(--accent);
+}
+
+.native-axis-label {
+  fill: var(--dark-muted);
+  font-family: var(--font);
+  font-size: 13px;
+}
+
+.native-cache-value {
+  fill: #fff;
+  font-family: var(--font);
+  font-size: 14px;
+}
+
+@media (max-width: 560px) {
+  .native-bar-label {
+    font-size: 12px;
+  }
+  .native-plot-heading {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 560px) {
+  .native-axis-label {
+    font-size: 22px;
+  }
+  .native-cache-value {
+    font-size: 24px;
   }
 }

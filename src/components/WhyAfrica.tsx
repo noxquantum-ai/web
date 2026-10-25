@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import { useScrollScrub } from '../useScrollScrub'
+import { ORIGINAL_GB, NEC_GB } from '../results'
 
 const STATEMENT =
   'The African Union reports that most African countries lack powerful GPUs in their universities and research institutions.'
@@ -9,17 +10,13 @@ const TIERS = [8, 16, 24]
 const SCALE = 24
 const pct = (gb: number) => `${(gb / SCALE) * 100}%`
 
-/**
- * Pinned and dark. As you scroll, the statement fills in word by word, then a memory
- * ruler builds itself: a 7B model at 16 bits is 14 GB of weights, and a tenth of that
- * is 1.4 GB. The arithmetic is simple (parameters × bytes), not a measurement.
- */
+/** The original pinned ruler animation, using the measured full-model package sizes. */
 export function Company() {
   const ref = useScrollScrub<HTMLElement>((p, el) => {
     const goal = el.querySelector('.africa-goal-num')?.firstChild
     if (!goal) return
     const k = Math.min(1, Math.max(0, (p - 0.66) / 0.2))
-    goal.nodeValue = (14 - 12.6 * k).toFixed(1)
+    goal.nodeValue = (ORIGINAL_GB + (NEC_GB - ORIGINAL_GB) * k).toFixed(2)
   })
 
   return (
@@ -28,7 +25,13 @@ export function Company() {
       data-overlap
       id="company"
       ref={ref}
-      style={{ '--n': WORDS.length } as CSSProperties}
+      style={
+        {
+          '--n': WORDS.length,
+          '--model-original': pct(ORIGINAL_GB),
+          '--model-nec': pct(NEC_GB),
+        } as CSSProperties
+      }
       aria-labelledby="africa-title"
     >
       <div className="africa-stage">
@@ -62,16 +65,16 @@ export function Company() {
                 <div className="africa-row africa-row-a">
                   <div className="africa-bar" />
                   <p>
-                    <strong>14 GB:</strong> a 7B-parameter model with 16-bit weights
+                    <strong>{ORIGINAL_GB.toFixed(2)} GB:</strong> original Llama-2-7B package
                   </p>
                 </div>
                 <div className="africa-row africa-row-b">
                   <div className="africa-bar africa-bar-goal" />
                   <p>
                     <strong>
-                      <span className="africa-goal-num">1.4</span> GB:
+                      <span className="africa-goal-num">{NEC_GB.toFixed(2)}</span> GB:
                     </strong>{' '}
-                    what a tenth of that would be. That’s our target, not something we’ve achieved.
+                    our NEC result. 5.485× compression and 81.77% less storage.
                   </p>
                 </div>
                 {TIERS.map((t) => (
@@ -81,17 +84,16 @@ export function Company() {
                 ))}
               </div>
               <figcaption>
-                Common GPU memory sizes. This counts weights only, not activations or cache, and
-                it’s simple arithmetic, not a measurement.
+                Measured serialized model packages. The scale is in GB; inference memory is a
+                separate measurement.
               </figcaption>
             </figure>
 
             <div className="africa-body">
               <p>
-                Most frontier models can’t be run there because the hardware isn’t available. A
-                model that needs a tenth of the memory could be used in classrooms, clinics and
-                field systems. That’s why Nox is starting in Africa, and why we plan to stay here as
-                we grow. Cheaper models would matter elsewhere too.
+                Compute is a constraint we know first-hand. Our work focuses on smaller model
+                representations, faster inference and, over time, more efficient LLM architectures.
+                We’re building from Africa for the hardware people actually have.
               </p>
             </div>
           </div>

@@ -58,10 +58,10 @@ function structuredData(route) {
     image: `${SITE}/og-image.png`,
     email: 'hello@noxquantum.com',
     description:
-      'A research company built from Africa developing quantum and quantum-inspired algorithms for hard computational problems, starting with compact AI models.',
+      'NoxQuantum develops computationally efficient AI through model compression, faster inference and better LLM architectures.',
     knowsAbout: [
-      'Quantum algorithms',
-      'Quantum-inspired algorithms',
+      'Computationally efficient AI',
+      'LLM architectures',
       'Tensor networks',
       'Model compression',
       'Efficient AI inference',
@@ -78,15 +78,14 @@ function structuredData(route) {
     '@id': `${SITE}/#website`,
     url: `${SITE}/`,
     name: 'NoxQuantum',
-    description:
-      'Quantum and quantum-inspired algorithms for hard computational problems, built from Africa.',
+    description: 'Computationally efficient AI, built from Africa.',
     inLanguage: 'en',
     publisher: { '@id': `${SITE}/#organization` },
   }
-  const title = route.title || 'NoxQuantum — Quantum algorithms for AI and beyond'
+  const title = route.title || 'NoxQuantum — Computationally efficient AI'
   const description =
     route.description ||
-    'Quantum-inspired algorithms for hard computational problems, starting with compact AI models. Built from Africa.'
+    'Smaller models, faster inference and better LLM architectures. Built from Africa.'
   const page = {
     '@type': route.published ? 'Article' : 'WebPage',
     '@id': `${url}#page`,
@@ -170,6 +169,12 @@ for (const route of routes) {
   if (font) {
     const tag = `<link rel="preload" href="/assets/${font}" as="font" type="font/woff2" crossorigin />`
     html = html.replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n    ${tag}`)
+  }
+  if (route.path === '/research' || route.path === '/blog') {
+    html = html.replace(
+      '</head>',
+      '<link rel="preload" href="/fonts/latin-modern-roman.woff2" as="font" type="font/woff2" crossorigin />\n</head>',
+    )
   }
   await writeFile(path.join(dist, route.file), html)
   console.log(`Pre-rendered ${route.file} (${route.path})`)

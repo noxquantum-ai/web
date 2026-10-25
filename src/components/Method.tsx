@@ -1,20 +1,16 @@
 import type { CSSProperties } from 'react'
 import { useScrollScrub } from '../useScrollScrub'
+import { NEC } from '../results'
 
 const NODES = [0, 1, 2, 3]
 const NODE_X = (i: number) => 400 + i * 110
 const CELLS = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-// A 4096 x 4096 matrix, with 4096 = 8 x 8 x 8 x 8, stored as four cores of size 8 x 8
-// joined by bonds of dimension 16: 1*64*16 + 16*64*16 + 16*64*16 + 16*64*1 numbers.
-const FULL = 4096 * 4096
-const CORES = 64 * 16 + 2 * (16 * 64 * 16) + 64 * 16
+// Complete Llama-2-7B coefficient accounting, including retained weights and scales.
+const FULL = NEC.originalCoefficients
+const CORES = NEC.coefficients
 
-/**
- * A weight matrix as a chain of small tensors (a tensor train). The pinned stage
- * scrubs with scroll: the matrix gives way to the chain and the storage count drops.
- * The arithmetic only counts stored numbers; it says nothing about accuracy.
- */
+/** Existing tensor-chain animation; the counters now show the measured full-model result. */
 export function Method() {
   const ref = useScrollScrub<HTMLElement>((p, el) => {
     const count = el.querySelector('.method-count')?.firstChild
@@ -29,22 +25,21 @@ export function Method() {
       <div className="method-stage">
         <div className="wrap method-grid">
           <div className="method-text">
-            <p className="kicker">The first problem</p>
+            <p className="kicker">Our compression result</p>
             <h2 className="section-title" id="method-title">
               Compact models
             </h2>
             <p className="rail-sub">
-              A large weight matrix can be stored as a chain of small tensors. We want to find out
-              whether this, and related ideas from quantum information, can beat pruning,
-              quantization and distillation.
+              NEC compresses all 32 layers of Llama-2-7B using tensor networks and sparse
+              corrections. The complete model package is 5.485× smaller, with 50.7% fewer stored
+              coefficients.
             </p>
             <p className="method-caveat">
-              These numbers only count what has to be stored. We don’t yet know whether a trained
-              model’s weights can be squeezed that far without losing what matters. That’s what
-              we’re testing.
+              Construction uses calibration data and analytical solves, with zero gradient-based
+              healing. Relative accuracy retention across evaluated tasks is 71.6–88.9%.
             </p>
-            <a className="text-link" href="/research#approach">
-              How we work <span aria-hidden="true">→</span>
+            <a className="text-link" href="/research#compression">
+              Read the results <span aria-hidden="true">→</span>
             </a>
           </div>
 
@@ -94,18 +89,19 @@ export function Method() {
 
             <dl className="method-stats">
               <div>
-                <dt>One 4096 × 4096 matrix</dt>
-                <dd>{FULL.toLocaleString('en-US')} numbers</dd>
+                <dt>Original model coefficients</dt>
+                <dd>{FULL.toLocaleString('en-US')}</dd>
               </div>
               <div className="method-stat-b">
-                <dt>Four cores, bond dimension 16</dt>
+                <dt>NEC stored coefficients</dt>
                 <dd>
-                  <span className="method-count">{CORES.toLocaleString('en-US')}</span> numbers
+                  <span className="method-count">{CORES.toLocaleString('en-US')}</span>
                 </dd>
               </div>
             </dl>
             <figcaption>
-              4096 = 8 × 8 × 8 × 8, so each core is 8 × 8 with bond dimension 16.
+              2.028× structural reduction. The diagram illustrates tensor factorization; the
+              counters describe the complete NEC hybrid model.
             </figcaption>
           </figure>
         </div>

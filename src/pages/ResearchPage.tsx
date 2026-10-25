@@ -1,87 +1,33 @@
-const threads = [
-  {
-    id: 'compression',
-    title: 'Tensor-structured compression',
-    body: 'We’re testing whether tensor networks and other tools from quantum information can compress trained models further than pruning, quantization and distillation do. People have already shown this is a serious area of research. Our job is to see whether we can improve on it in a meaningful way.',
-  },
-  {
-    id: 'evaluation',
-    title: 'Capability-preserving evaluation',
-    body: 'Before compressing anything, we decide which capabilities matter. Then we report where each method loses something, instead of hiding it in an average. It’s easy to make a model smaller. It’s harder to keep it useful.',
-  },
-  {
-    id: 'inference',
-    title: 'Low-compute inference',
-    body: 'A smaller model only helps if it runs faster on the hardware people have. We time inference on limited GPUs, because that’s where a method has to work.',
-  },
-]
-
-const steps = [
-  {
-    title: 'Pick the model',
-    body: 'Choose one model and one way of evaluating it before any compression work starts.',
-  },
-  {
-    title: 'Measure existing methods',
-    body: 'Find out what current methods already achieve on that evaluation.',
-  },
-  {
-    title: 'Test ours against them',
-    body: 'Run our methods under the same conditions and on the same kind of hardware.',
-  },
-  {
-    title: 'Publish all of it',
-    body: 'Report quality, memory and speed together, including the results that didn’t work.',
-  },
-]
-
-const columns = [
-  { name: 'Quality', note: 'Capabilities we choose before compressing anything.' },
-  { name: 'Memory', note: 'Weights and runtime memory, against the GPUs people have.' },
-  { name: 'Speed', note: 'Real inference time on limited GPUs.' },
-]
-
-const rows = [
-  { name: 'Pruning', note: 'Existing method' },
-  { name: 'Quantization', note: 'Existing method' },
-  { name: 'Distillation', note: 'Existing method' },
-  { name: 'Nox', note: 'Our methods', ours: true },
-]
+import { ResearchFigure } from '../components/ResearchFigure'
 
 const contents = [
   { href: '#compression', label: 'Compression' },
-  { href: '#evaluation', label: 'Evaluation' },
-  { href: '#inference', label: 'Inference' },
-  { href: '#approach', label: 'How we work' },
-  { href: '#compare', label: 'How we compare' },
-  { href: '#status', label: 'Where we are' },
+  { href: '#evaluation', label: 'Accuracy' },
+  { href: '#inference', label: 'CPU inference' },
 ]
 
-/** A long-form article on a black page: what we research, how we work and how we will judge it. */
 export default function ResearchPage() {
   return (
     <main id="main" tabIndex={-1} className="post">
       <article>
-        <header className="post-head" data-reveal>
+        <header className="post-head">
+          <h1 className="post-title">
+            NEC: compressing <span className="post-term">Llama-2-7B</span> without{' '}
+            <span className="post-term">gradient-based healing</span>
+          </h1>
           <p className="post-meta">
-            <span>Research</span>
-            <span>3 min read</span>
-          </p>
-          <h1 className="post-title">How we research compact models</h1>
-          <p className="post-dek">
-            We work on three problems. Each is judged on quality, memory use and how fast the model
-            runs.
+            <time dateTime="2026-10-25">October 25, 2026</time>
+            <span>NoxQuantum</span>
           </p>
         </header>
-
         <div className="post-body">
-          <p>
-            Nox starts by researching algorithms that let large AI models run on much less hardware
-            without losing the capabilities that matter.
+          <p id="approach">
+            Our Nox Entanglement Compiler reduces a complete Llama-2-7B package from 13.48 GB to
+            2.46 GB: 5.485× storage compression, with 50.7% fewer stored coefficients. Relative
+            accuracy retention across evaluated tasks is 71.6–88.9%.
           </p>
-
           <nav className="post-toc" aria-label="On this page">
-            <span>On this page</span>
+            <span>Contents</span>
             {contents.map((c) => (
               <a key={c.href} href={c.href}>
                 {c.label}
@@ -89,83 +35,93 @@ export default function ResearchPage() {
             ))}
           </nav>
 
-          {threads.map((t) => (
-            <section
-              key={t.id}
-              id={t.id}
-              className="post-section"
-              aria-labelledby={`${t.id}-h`}
-              data-reveal
-            >
-              <h2 id={`${t.id}-h`}>{t.title}</h2>
-              <p>{t.body}</p>
-            </section>
-          ))}
-
-          <section id="approach" className="post-section" aria-labelledby="approach-h" data-reveal>
-            <h2 id="approach-h">How we work</h2>
+          <section id="compression" className="post-section" aria-labelledby="compression-h">
+            <h2 id="compression-h">Full-model compression</h2>
             <p>
-              We start with one model, measure what existing methods can do, then test ours against
-              them.
+              NEC replaces the seven linear projections in every transformer layer with a
+              tensor-network backbone and sparse residual corrections. All 32 layers are compressed.
+              Calibration activations guide analytical reconstruction; no gradient-based fine-tuning
+              or healing is used.
             </p>
-            <ol className="post-steps">
-              {steps.map((s) => (
-                <li key={s.title}>
-                  <strong>{s.title}.</strong> {s.body}
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section id="compare" className="post-section" aria-labelledby="compare-h" data-reveal>
-            <h2 id="compare-h">How we compare methods</h2>
-            <p>
-              We’ll run every method on the same model and the same hardware, and judge them all the
-              same way. We have no results yet, so nothing here is filled in.
-            </p>
-            <table className="compare">
+            <table className="compare post-results">
               <caption className="sr-only">
-                Planned comparison of methods on quality, memory and speed. No results yet.
+                Complete Llama-2-7B package and stored coefficient measurements
               </caption>
               <thead>
                 <tr>
-                  <th scope="col">Method</th>
-                  {columns.map((c) => (
-                    <th key={c.name} scope="col">
-                      {c.name}
-                      <small>{c.note}</small>
-                    </th>
-                  ))}
+                  <th scope="col">Model</th>
+                  <th scope="col">Package</th>
+                  <th scope="col">Coefficients</th>
                 </tr>
               </thead>
               <tbody>
-                {rows.map((r) => (
-                  <tr key={r.name} className={r.ours ? 'is-ours' : undefined}>
-                    <th scope="row">
-                      <span className="compare-name">{r.name}</span>
-                      <small>{r.note}</small>
-                      {r.ours && <span className="compare-pending">Pending</span>}
-                    </th>
-                    {columns.map((c) => (
-                      <td key={c.name} data-label={c.name}>
-                        <span className="track" aria-hidden="true" />
-                        <span className="sr-only">Not measured yet</span>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                <tr>
+                  <th scope="row">
+                    <span className="compare-name">Original FP16</span>
+                  </th>
+                  <td data-label="Package">13.479 GB</td>
+                  <td data-label="Coefficients">6.738 billion</td>
+                </tr>
+                <tr className="is-ours">
+                  <th scope="row">
+                    <span className="compare-name">NEC streamed v2</span>
+                  </th>
+                  <td data-label="Package">2.457 GB</td>
+                  <td data-label="Coefficients">3.323 billion</td>
+                </tr>
               </tbody>
             </table>
+            <p className="post-note">
+              5.485× less serialized storage. 2.028× fewer stored coefficients. Complete package
+              accounting includes retained weights, metadata, decoder and lossless containers;
+              support masks count toward bytes, not coefficients.
+            </p>
+            <ResearchFigure
+              file="01_model_storage"
+              alt="The original package is 13.479 GB and NEC is 2.457 GB, a 5.485-fold compression and 81.77 percent storage reduction."
+              caption="Complete serialized model storage."
+            />
+            <p>
+              The streamed reconstruction uses 98,304 mixed-domain calibration tokens. It updates
+              sparse amplitudes and selected supports while keeping the coefficient budget fixed.
+              The exported loader reproduces checkpoint logits bit for bit.
+            </p>
           </section>
 
-          <section id="status" className="post-section" aria-labelledby="status-h" data-reveal>
-            <h2 id="status-h">Where we are</h2>
+          <section id="evaluation" className="post-section" aria-labelledby="evaluation-h">
+            <h2 id="evaluation-h">Accuracy retention</h2>
             <p>
-              We’ve just started. We’re choosing the first model and how to evaluate it. There are
-              no results yet. When there are, we’ll post them here, including the ones that didn’t
-              work.
+              NEC retains 71.6–88.9% of original-reference accuracy across evaluated tasks.
+              Retention is the compressed model’s task accuracy divided by the reference score,
+              rather than its absolute accuracy.
             </p>
-            <p className="post-sign">The Nox team</p>
+            <ResearchFigure
+              file="03_capability_retention"
+              alt="Relative accuracy retained across evaluated tasks ranges from 71.6 percent to 88.9 percent."
+              caption="Relative accuracy retained across evaluated tasks."
+            />
+          </section>
+
+          <section id="inference" className="post-section" aria-labelledby="inference-h">
+            <h2 id="inference-h">A separate CPU inference prototype</h2>
+            <p>
+              Our Sparse-MoE prototype runs a quantized 35B-total-parameter mixture-of-experts model
+              on CPU, using a pinned and patched llama.cpp runtime. Expert weights are staged from
+              SSD into a bounded cache. Frequently used experts stay resident.
+            </p>
+            <p>
+              The model artifact is 12.262 GB. The frozen 3–6 GB cache configurations have expected
+              hit rates from 55.7% to 93.3%; these budgets describe expert caching, not total
+              process RAM.
+            </p>
+            <details className="post-detail">
+              <summary>Expert-cache figure</summary>
+              <ResearchFigure
+                file="10_expert_cache_efficiency"
+                alt="Frozen expected cache hit rates rise from 55.7 percent at 3 GB to 93.3 percent at 6 GB."
+                caption="Expected expert-cache efficiency."
+              />
+            </details>
           </section>
         </div>
       </article>
