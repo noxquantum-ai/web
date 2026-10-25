@@ -5,16 +5,19 @@ const links = {
   blog: [
     { href: '/research', label: 'Research' },
     { href: '/blog', label: 'Blog', current: true },
+    { href: '/#commercial', label: 'Commercial fit' },
     { href: '/#company', label: 'Why Africa' },
   ],
   home: [
     { href: '/research', label: 'Research' },
     { href: '/blog', label: 'Blog' },
+    { href: '#commercial', label: 'Commercial fit' },
     { href: '#company', label: 'Why Africa' },
   ],
   research: [
     { href: '/research', label: 'Research', current: true },
     { href: '/blog', label: 'Blog' },
+    { href: '/#commercial', label: 'Commercial fit' },
     { href: '/#company', label: 'Why Africa' },
   ],
 }
