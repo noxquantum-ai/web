@@ -296,21 +296,6 @@ button:focus-visible {
   font-size: 13px;
 }
 
-.hero-research-link {
-  display: inline-block;
-  margin-left: 18px;
-  color: var(--dark-muted);
-  font-size: 14px;
-  text-decoration: underline;
-  text-decoration-color: #626762;
-  text-underline-offset: 4px;
-}
-
-.hero-research-link:hover {
-  color: #fff;
-  text-decoration-color: #fff;
-}
-
 .hero-grain {
   position: absolute;
   inset: 0;
@@ -331,145 +316,6 @@ button:focus-visible {
   line-height: 1.05;
   letter-spacing: -0.04em;
   margin: 0 0 16px;
-}
-
-/* Commercial fit: lead with the businesses and the measured deployment constraint. */
-
-.commercial-fit {
-  padding: clamp(76px, 9vw, 124px) 0;
-  background: var(--paper);
-}
-
-.commercial-overview {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(270px, 0.8fr);
-  align-items: end;
-  gap: clamp(40px, 8vw, 112px);
-}
-
-.commercial-fit .kicker {
-  color: var(--accent-ink);
-}
-
-.commercial-intro h2 {
-  max-width: 13em;
-  margin: 0 0 20px;
-  font-size: clamp(34px, 4.8vw, 62px);
-  font-weight: 450;
-  line-height: 1.04;
-  letter-spacing: -0.045em;
-  text-wrap: balance;
-}
-
-.commercial-intro > p:last-child {
-  max-width: 42em;
-  margin: 0;
-  color: var(--muted);
-}
-
-.commercial-proof {
-  margin: 0;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-}
-
-.commercial-proof-label,
-.commercial-proof-caption {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.commercial-proof-ratio {
-  margin: 6px 0 -7px;
-  font-size: clamp(48px, 6vw, 80px);
-  line-height: 1;
-  letter-spacing: -0.06em;
-  font-variant-numeric: tabular-nums;
-}
-
-.commercial-proof-caption {
-  color: var(--accent-ink);
-  font-weight: 600;
-}
-
-.commercial-proof-sizes {
-  display: flex;
-  gap: 28px;
-  margin: 24px 0 0;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
-
-.commercial-proof-sizes dt {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.commercial-proof-sizes dd {
-  margin: 2px 0 0;
-  font-size: 18px;
-  font-variant-numeric: tabular-nums;
-}
-
-.commercial-audiences {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 32px;
-  margin: 72px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.commercial-audiences li {
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
-}
-
-.commercial-audiences h3 {
-  margin: 0 0 12px;
-  font-size: 20px;
-  font-weight: 550;
-  line-height: 1.25;
-  letter-spacing: -0.025em;
-}
-
-.commercial-audiences p {
-  margin: 0 0 12px;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.55;
-}
-
-.commercial-audiences .commercial-value {
-  color: var(--ink);
-}
-
-.commercial-outreach {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  margin-top: 52px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-}
-
-.commercial-outreach p {
-  max-width: 58em;
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.btn-ink {
-  flex: none;
-  background: var(--ink);
-  color: #fff;
-}
-
-.btn-ink:hover {
-  background: #303530;
 }
 
 .rail-sub {
@@ -960,14 +806,6 @@ button:focus-visible {
     padding-left: 24px;
     padding-right: 24px;
   }
-  .commercial-overview {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .commercial-proof {
-    width: 100%;
-    max-width: 420px;
-  }
   .section {
     padding: 88px 0;
   }
@@ -989,25 +827,6 @@ button:focus-visible {
 @media (max-width: 560px) {
   .footer-grid {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 760px) {
-  .commercial-audiences {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 48px;
-  }
-  .commercial-outreach {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 18px;
-    margin-top: 36px;
-  }
-  .hero-research-link {
-    display: block;
-    width: fit-content;
-    margin: 16px 0 0;
   }
 }
 
