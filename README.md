@@ -11,11 +11,12 @@ npm run dev      # http://localhost:5173/
 
 ## Pages
 
-| Route       | What it is                                                                       |
-| ----------- | -------------------------------------------------------------------------------- |
-| `/`         | Hero, thesis, why Africa and the first problem (compact models)                  |
-| `/research` | Long-form: the three research threads, how we work, how we compare, where we are |
-| `/privacy`  | Static privacy note                                                              |
+| Route       | What it is                                                                 |
+| ----------- | -------------------------------------------------------------------------- |
+| `/`         | Hero, thesis, why Africa and the first problem (compact models)            |
+| `/research` | NEC compression results, retained accuracy and the CPU inference prototype |
+| `/blog`     | Technical article index; currently links to the NEC research article       |
+| `/privacy`  | Static privacy note                                                        |
 
 Routes are listed in `src/routes.ts`. There is no client-side router: each route is rendered to its
 own HTML file at build time (`scripts/prerender.mjs`), with its own title, description and preview
@@ -90,3 +91,7 @@ Cloudflare in front. This has not been load-tested against the live deployment.
   link (or the Facebook Sharing Debugger) is needed to refresh one.
 - Confirm `hello@noxquantum.com` receives mail.
 - `public/og-image.png` is the social preview (1200×630).
+
+## Research update
+
+The original homepage palette, circuit canvas, scroll animations, sheet transitions and tensor diagram remain. The ruler now animates measured serialized package sizes (13.48 → 2.46 GB), and the tensor section shows the full-model coefficient counts. Research and blog pages use a local Latin Modern serif for headings alongside the existing Inter body font. The serif font license is included under `public/fonts/`. Research charts render as native HTML and inline SVG in the existing black, white and gold palette; only chart marks animate, with reduced motion respected. Three scientific SVGs are available as downloads from `public/figures/`; the article links to the underlying experiment record.

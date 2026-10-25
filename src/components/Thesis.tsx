@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 import { useScrollThrough } from '../useScrollScrub'
 
 const STATEMENT =
-  'Large AI models should run on much less hardware without losing the capabilities that matter. We want to find out whether ideas from quantum information can help.'
+  'Large AI models should run on much less hardware. We work on model compression and faster inference, with the longer-term goal of building better LLM architectures.'
 const WORDS = STATEMENT.split(' ')
 
 /** Why Nox exists, in two sentences. The words fill in as the statement scrolls up the screen. */

@@ -13,12 +13,20 @@ export interface Route {
 export const routes: Route[] = [
   { path: '/', file: 'index.html' },
   {
+    path: '/blog',
+    file: 'blog.html',
+    title: 'Blog — NoxQuantum',
+    description:
+      'Technical articles and experimental results on model compression, efficient AI inference and LLM architectures.',
+    section: 'Blog',
+  },
+  {
     path: '/research',
     file: 'research.html',
     title: 'Research — NoxQuantum',
     description:
-      'How NoxQuantum works on compact models: tensor-structured compression, capability-preserving evaluation and low-compute inference, and how we compare methods.',
-    published: '2026-10-09',
+      'NEC results: 5.485× storage compression, 2.028× structural reduction and gradient-free construction, plus our separate CPU inference prototype.',
+    published: '2026-10-25',
     section: 'Research',
   },
 ]
