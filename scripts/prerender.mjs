@@ -182,10 +182,7 @@ for (const route of routes) {
 
 // Sitemap and robots.txt name the host and carry dates, so they are generated here, not kept as static files.
 // Previews publish no sitemap: they are not for search.
-const pages = [
-  ...routes.map((r) => ({ path: r.path, lastmod: r.published || TODAY })),
-  { path: '/privacy', lastmod: TODAY },
-]
+const pages = [...routes.map((r) => ({ path: r.path, lastmod: r.published || TODAY }))]
 if (isProduction) {
   await writeFile(
     path.join(dist, 'sitemap.xml'),
@@ -207,3 +204,6 @@ if (isProduction) {
 
 if (sheet) await rm(path.join(dist, sheet[1]))
 await rm(path.join(root, 'dist-server'), { recursive: true, force: true })
+
+// The previous privacy page is not part of the current single-page site.
+await rm(path.join(dist, 'privacy.html'), { force: true })
