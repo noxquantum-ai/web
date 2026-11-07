@@ -48,5 +48,37 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/research",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/research.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/blog",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/privacy",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/",
+      "permanent": false
+    }
   ]
 }

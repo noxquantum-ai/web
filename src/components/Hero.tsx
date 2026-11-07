@@ -14,13 +14,6 @@ export default function Hero() {
       <div className="hero-grain" aria-hidden="true" />
       <div className="wrap hero-inner">
         <h1>Frontier models shouldn&rsquo;t need frontier hardware.</h1>
-        <p className="hero-sub">
-          NoxQuantum builds computationally efficient AI: smaller models, faster inference and, over
-          time, better LLM architectures. Built from Africa.
-        </p>
-        <a className="btn btn-light" href="/research">
-          Our research <span aria-hidden="true">→</span>
-        </a>
       </div>
     </section>
   )
