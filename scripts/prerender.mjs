@@ -56,7 +56,7 @@ function structuredData(route) {
     url: `${SITE}/`,
     logo: { '@type': 'ImageObject', url: `${SITE}/icon-192.png`, width: 192, height: 192 },
     image: `${SITE}/og-image.png`,
-    email: 'hello@noxquantum.com',
+    email: 'founders@noxquantum.com',
     description:
       'NoxQuantum develops computationally efficient AI through model compression, faster inference and better LLM architectures.',
     knowsAbout: [
@@ -69,7 +69,7 @@ function structuredData(route) {
     areaServed: 'Worldwide',
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'hello@noxquantum.com',
+      email: 'founders@noxquantum.com',
       contactType: 'research enquiries',
     },
   }

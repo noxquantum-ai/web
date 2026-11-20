@@ -11,8 +11,8 @@ export function Footer() {
             NoxQuantum
           </p>
           <p>Computationally efficient AI. Built from Africa.</p>
-          <a className="footer-mail" href="mailto:hello@noxquantum.com">
-            hello@noxquantum.com
+          <a className="footer-mail" href="mailto:founders@noxquantum.com">
+            founders@noxquantum.com
           </a>
         </div>
         <nav aria-label="Research">
